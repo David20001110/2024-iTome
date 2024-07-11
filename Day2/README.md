@@ -28,7 +28,7 @@ Django 是一個 python 的 Web 框架它提供了豐富的工具和內置功能
     ```commandline
     python --version
     ```
-#### 設置虛擬環境
+#### 設置虛擬環境 [(這邊有官方教學可以看)](https://www.jetbrains.com/help/dataspell/poetry.html#cbc399de)
 我是使用 poetry 來管理套件及虛擬環境，相較於 pip 比較複雜但是比 pip 強大許多
 
 1. 安裝 poetry  
@@ -41,7 +41,36 @@ Django 是一個 python 的 Web 框架它提供了豐富的工具和內置功能
     ```
    (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python -
    ```
-2. 
+   安裝好後可以打開 CMD 或終端，輸入命令確認是否安裝成功
+   ```
+   poetry --version
+   ```  
+     
+2. 建立虛擬環境  
+   可以透過`ctrl+shift+p` 打開Settings  
+
+   ![img.png](setting.png)
+   - 選擇`Add Local Interpreter`  
+   <br>
+   
+   ![img.png](environment.png)
+   - 選擇`Poetry Envvironment`，`Base interpreter`選擇你下載的Python版本就可以建立了  
+   <br>  
+   
+   ![img.png](img.png)
+   - 可以確認右下角是否有顯示Poetry的圖示，代表成功建立虛擬環境  
+   <br>
+
+3. 安裝 Django  
+   在終端輸入下列指令安裝 Django
+   ```
+   poetry add django
+   ```
+   安裝好後可以打開 CMD 或終端，輸入命令確認是否安裝成功
+   ```
+   django-admin --version
+   ```
+
 ## 四、參考資料
 - https://blog.kyomind.tw/python-poetry/
 - https://aws.amazon.com/tw/what-is/django/
