@@ -28,6 +28,20 @@ Django 是一個 python 的 Web 框架它提供了豐富的工具和內置功能
     ```commandline
     python --version
     ```
+#### 設置虛擬環境
+我是使用 poetry 來管理套件及虛擬環境，相較於 pip 比較複雜但是比 pip 強大許多
 
+1. 安裝 poetry  
+   official installer 安裝 Poetry，只要在命令列輸入下列指令  
+   **macOS / Linux / WSL**
+    ```
+   curl -sSL https://install.python-poetry.org | python3 -
+   ``` 
+   **Windows**
+    ```
+   (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python -
+   ```
+2. 
 ## 四、參考資料
+- https://blog.kyomind.tw/python-poetry/
 - https://aws.amazon.com/tw/what-is/django/
