@@ -66,11 +66,19 @@ Django 是一個 python 的 Web 框架它提供了豐富的工具和內置功能
    ```
    poetry add django
    ```
-   安裝好後可以打開 CMD 或終端，輸入命令確認是否安裝成功
+
+4. 啟動 Django  
+
+   - 創建完成後，可以透過下列指令確認是否有創建成功：
+   ```commandline
+   python manage.py runserver
    ```
-   django-admin --version
-   ```
+   - 終端機會顯示以下畫面
+   ![terminal.png](terminal.png)
+   - 接著點開地端網址以及port號看到以下畫面代表成功安裝
+   ![runsever.png](runsever.png)
 
 ## 四、參考資料
 - https://blog.kyomind.tw/python-poetry/
 - https://aws.amazon.com/tw/what-is/django/
+- https://ithelp.ithome.com.tw/m/articles/10292317
