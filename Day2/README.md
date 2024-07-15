@@ -66,6 +66,10 @@ Django 是一個 python 的 Web 框架它提供了豐富的工具和內置功能
    ```
    poetry add django
    ```
+    安裝好後可以打開 CMD 或終端，輸入命令確認是否安裝成功
+    ```
+    django-admin --version
+    ```
 
 4. 啟動 Django  
 
@@ -74,9 +78,9 @@ Django 是一個 python 的 Web 框架它提供了豐富的工具和內置功能
    python manage.py runserver
    ```
    - 終端機會顯示以下畫面
-   ![terminal.png](terminal.png)
+   ![terminal.png](../Day4/terminal.png)
    - 接著點開地端網址以及port號看到以下畫面代表成功安裝
-   ![runsever.png](runsever.png)
+   ![runsever.png](../Day4/runsever.png)
 
 ## 四、參考資料
 - https://blog.kyomind.tw/python-poetry/
