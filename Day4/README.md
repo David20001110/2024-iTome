@@ -36,19 +36,28 @@
 ![runsever.png](../Day4/runsever.png)
 
 ## 二、項目結構說明
-- `manage.py` 是一個命令列工具，可以讓你用各種方式和你的 Django 專案互動
-- `mysite/` 是專案的 Python package，包含了你的專案的設定和所有的 Django 應用
+```
+   mysite/
+   ├── manage.py
+   └── mysite/
+       ├── __init__.py
+       ├── asgi.py
+       ├── settings.py
+       ├── urls.py
+       └── wsgi.py
+``` 
+根據上面的結構最外層`mysite`是專案的名稱
+- `manage.py` 是一個命令列工具，可以讓你用各種方式和你的 Django 專案互動，像是啟動服務、進行遷移、創建應用等等
+- 內層`mysite/` 是專案的 Python package，包含了你的專案的設定和所有的 Django 應用
 - `mysite/__init__.py` 是一個空文件，告訴 Python 這個目錄應該被視為一個 Python package
-- `mysite/settings.py` 是專案的設定檔
-- `mysite/urls.py` 是專案的 URL 宣告
-- `mysite/asgi.py` 和 `mysite/wsgi.py` 是幫助你將你的 Django 專案部署到 WSGI 兼容的 Web 伺服器的檔案
+- `mysite/settings.py` 是 Django 主要設定檔包含資料庫配置、靜態文件路徑、已安裝的應用等
+- `mysite/urls.py` 定義了 URL 路由映射，它告訴 Django 當用戶請求特定 URL 時，應該調用哪個視圖來處理請求。
+- `mysite/asgi.py` 和 `mysite/wsgi.py` 這兩個文件負責配置和運行 Django 專案，使其能夠在各自兼容的 Web 服務器上運行。
 - 這些檔案是 Django 專案的基礎結構，你可以根據你的需求來修改或新增檔案
-- 這樣就完成了 Django 專案的創建
-- 接著我們可以進入到專案資料夾，啟動伺服器
 
+## 三、設定資料庫
+在 Django 中，預設使用 SQLite 作為資料庫，但是在實際開發中，我們會使用 PostgreSQL 或 MySQL 作為資料庫，這邊我們先來看看如何設定 SQLite 資料庫。
 
-  - 這樣就完成了 Django 專案的創建
-  - 如果有任何問題歡迎在下方留言或是寄信給我
 
 ## 二、參考資料
 - https://ithelp.ithome.com.tw/articles/10269181
