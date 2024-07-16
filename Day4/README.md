@@ -51,12 +51,45 @@
 - 內層`mysite/` 是專案的 Python package，包含了你的專案的設定和所有的 Django 應用
 - `mysite/__init__.py` 是一個空文件，告訴 Python 這個目錄應該被視為一個 Python package
 - `mysite/settings.py` 是 Django 主要設定檔包含資料庫配置、靜態文件路徑、已安裝的應用等
+   - 註冊應用程式的部分: 創建應用程式後，需要將其註冊 settings.py 的 `INSTALLED_APPS` 列表中，這樣 Django 才能識別和使用這個應用程式。
+   - ![img.png](../Day5/installed.png)
 - `mysite/urls.py` 定義了 URL 路由映射，它告訴 Django 當用戶請求特定 URL 時，應該調用哪個視圖來處理請求。
 - `mysite/asgi.py` 和 `mysite/wsgi.py` 這兩個文件負責配置和運行 Django 專案，使其能夠在各自兼容的 Web 服務器上運行。
 - 這些檔案是 Django 專案的基礎結構，你可以根據你的需求來修改或新增檔案
 
+
 ## 三、設定資料庫
-在 Django 中，預設使用 SQLite 作為資料庫，但是在實際開發中，我們會使用 PostgreSQL 或 MySQL 作為資料庫，這邊我們先來看看如何設定 SQLite 資料庫。
+在 Django 中，預設使用 SQLite 作為資料庫，但是在實際開發中會使用別的像是 PostgreSQL、Oracle、MySQL 作為資料庫，這邊我們先來看看如何設定 SQLite 資料庫。
+1. SQLite 設定
+    - 在 `mysite/settings.py` 中找到 `DATABASES` 設定
+    ```python
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+    ```
+    - `ENGINE` 是資料庫引擎，這邊是 SQLite
+    - `NAME` 是資料庫名稱，這邊是 `db.sqlite3`，這個檔案會被創建在專案的根目錄
+
+2. MySQL 設定
+    - 首先要安裝 MySQL
+    - 在 `mysite/settings.py` 中找到 `DATABASES` 設定
+    - 為了提高安全性，可以使用環境變數來管理敏感信息(User、密碼)。
+    ```python
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'your_db_name',
+        'USER': 'your_db_user',
+        'PASSWORD': 'your_db_password',
+        'HOST': 'localhost',  # 或者使用使用的機器
+        'PORT': '3306',       # MySQL 默認端口
+        }
+    }
+    ```   
+
 
 
 ## 二、參考資料
