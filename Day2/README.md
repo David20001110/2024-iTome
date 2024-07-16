@@ -1,4 +1,7 @@
 # Day 2 - 介紹甚麼是 Django、安裝、開發環境
+- 開發IDE
+- 安裝pyhton、django
+- 設置虛擬環境(使用poetry)
 
 ## 一、什麼是 Django 
 Django 是一個 python 的 Web 框架它提供了豐富的工具和內置功能，主要應用於構建各種類型的Web應用程序，
