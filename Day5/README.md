@@ -1,6 +1,7 @@
 # Day 5 - 
 - 什麼是DRF
 - 建立、註冊app
+- 建立簡易的 Django API
 
 
 ## 一、什麼是DRF
@@ -16,7 +17,7 @@ DRF 的優點:
 ## 二、安裝 DRF
 1. 安裝 DRF
     ```commandline
-    pip install djangorestframework
+    poetry add djangorestframework
     ```
 2. 將 rest_framework 添加到 Django 項目的 `INSTALLED_APPS` 中
     ```python
@@ -27,33 +28,74 @@ DRF 的優點:
     ```
 
 ## 二、建立、註冊app
-在這個章節我們會開始建立一個 Django app，並註冊到專案中。
+昨天建立完專案之後今天我們要建立一個 Django app，並註冊到專案中。
 
-1. 建立 app
+1. 什麼是 app
+    - Django app 是一個獨立的模塊或組件，每個 app 可以獨立開發和測試，它包含了模型、視圖、模板等等，以實際例子來說明，假如我想要建立一個線上書店，就會分別需要有管理使用者和書籍的 app 等等。
+
+
+2. 建立 app
     ```commandline
-    python manage.py startapp myapp
+    python manage.py startapp dataset
     ```
-    - `myapp` 是 app 的名稱，可以自行更改
-    - 執行完後會看到以下結構，下面會加以介紹  
+    - `dataset` 是 app 的名稱，可以自行更改
+    - 執行完後會看到 app 的結構如下:  
     ![img.png](img.png)
+        - models.py: 定義模型
+        - views.py: 定義視圖
+        - admin.py: 註冊模型到管理站台
+        - apps.py: app 的配置文件
+        - migrations: 存放數據庫遷移文件
+        - tests.py: 測試文件 
    
 
-2. 註冊 app
+3. 註冊 app
+
     - 在專案的 `settings.py` 中的 `INSTALLED_APPS` 中加入剛剛建立的 app
+        ```python
+        INSTALLED_APPS = [
+            ...
+            'dataset',
+        ]
+        ```
+
+4. 設定路由
+    - 在 app 中創建一個`urls.py`檔案
+    - 在專案的 `urls.py` 中加入 app 的路由
+        ```python
+        from django.urls import path, include
+        urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('dataset/', include('dataset.urls')),
+        ]
+       ```
+
+## 三、建立簡易的 Django API
+1. 在 app 中創建 `views.py` 
     ```python
-    INSTALLED_APPS = [
-        ...
-        'myapp',
+    from django.http import HttpResponse
+
+    # Create your views here.
+    def hello_world(request):
+        return HttpResponse("Hello World")
+   ```
+2. 在 `urls.py` 加入路由
+    ```python
+    from django.urls import path
+    from dataset import views
+
+    urlpatterns = [
+        path('hello/', views.hello_world),
     ]
     ```
-3. 啟動 app
-    - 註冊完後可以透過下列指令確認是否有創建成功：
+3. 啟動服務
     ```commandline
     python manage.py runserver
     ```
-4. 確認是否建立成功
-5. 結束
-
+   
+4. 打開瀏覽器輸入 `http://  
+    ![img_2.png](img_2.png)
 
 ## 參考資料
 - https://blog.kyomind.tw/django-rest-framework-01/
+- https://ithelp.ithome.com.tw/m/articles/10289337
