@@ -71,7 +71,7 @@ DRF 的優點:
        ```
 
 ## 三、建立簡易的 Django API
-1. 在 app 中創建 `views.py` 
+1. 在 `views.py` 中建立一個 function 回傳 Hello World
     ```python
     from django.http import HttpResponse
 
@@ -79,7 +79,7 @@ DRF 的優點:
     def hello_world(request):
         return HttpResponse("Hello World")
    ```
-2. 在 `urls.py` 加入路由
+2. 在 `urls.py` 建立對應的路由和 views 進行連結
     ```python
     from django.urls import path
     from dataset import views
@@ -93,7 +93,8 @@ DRF 的優點:
     python manage.py runserver
     ```
    
-4. 打開瀏覽器輸入 `http://  
+4. 打開瀏覽器輸入 `http://127.0.0.1:8000/dataset/hello/` 看到以下實際畫面就成功了  
+
     ![img_2.png](img_2.png)
 
 ## 參考資料

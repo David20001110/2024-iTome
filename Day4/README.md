@@ -1,4 +1,4 @@
-# Day 4 - 開始創建 Django 專案 (Day2的廉潔要更換)
+# Day 4 - 開始創建 Django 專案 
 - 創建django專案
 - 項目結構說明
 - 設定資料庫
