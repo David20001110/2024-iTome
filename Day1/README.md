@@ -13,11 +13,11 @@
 |     | 主題                                  | 大綱                                                                                                      |
 |-----|-------------------------------------|---------------------------------------------------------------------------------------------------------|
 | 1.  | 30天從0開始學習 Django 內容簡介               | - 介紹30天標題與大綱                                                                                            
-| 2.  | 介紹甚麼是 Django、安裝、開發環境                | - 介紹 Django <br> - 開發IDE <br> - 下載pyhton、設置虛擬環境(使用poetry)、安裝django                                                      |
+| 2.  | 介紹甚麼是 Django、安裝、開發環境                | - 介紹 Django <br> - 開發IDE <br> - 下載pyhton、設置虛擬環境(使用poetry)、安裝django                                      |
 | 3.  | MTV 架構說明                            | - MTV架構說明                                                                                               |
 | 4.  | 開始創建 Django 專案                      | - 創建django專案 <br> - 項目結構說明 <br> - 設定資料庫                                                                 |
-| 5.  | 介紹DRF以及建立第一個app                     | - 什麼是DRF <br>- 建立、註冊app                                                                                 |
-| 6.  | REST API基礎                          | - 介紹RESTful架構 <br>- 使用Django REST framework創建API <br>- CRUD操作                                           |
+| 5.  | 建立第一個app以及簡易的API                     | - 什麼是app <br>- 建立、註冊app <br>- 建立簡易API                                                                   |
+| 6.  | 介紹DRF以及REST API基礎                          | - 介紹DRF <br>- 介紹RESTful架構 <br>- 使用Django REST framework創建API <br>- CRUD操作                               |
 | 7.  | 視圖（Views）                           | - function based views <br>- 建立views <br>- 如何連接URL                                                      |
 | 8.  | 模板（Templates）                       | - 建立template <br>- 基礎語法 <br>- 連接views <br>- 模板繼承                                                        |
 | 9.  | Templates 進階                        | - 使用過濾器 <br>- 加載靜態文件 (配置路徑、 使用CSS美化模板)                                                                  |

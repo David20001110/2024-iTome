@@ -1,40 +1,15 @@
-# Day 5 - 
-- 什麼是DRF
-- 建立、註冊app
+# Day 5 - 建立第一個 app 以及簡易的 API
+- 介紹 app
+- 建立、註冊 app
 - 建立簡易的 Django API
 
-
-## 一、什麼是DRF
-DRF(Django REST framework) 是一個功能強大的工具包，專門為構建 Web API 而設計的套件。提供了一套簡潔且強大的工具來處理API的各個方面，如強大的序列化器、權限管理、通用 API 視圖。
-
-DRF 的優點:
-- 快速開發 API
-- 強大的序列化器
-- 內建認證和權限控制
-- 客製化 API 視圖
-- 自動生成 API 文檔
-
-## 二、安裝 DRF
-1. 安裝 DRF
-    ```commandline
-    poetry add djangorestframework
-    ```
-2. 將 rest_framework 添加到 Django 項目的 `INSTALLED_APPS` 中
-    ```python
-    INSTALLED_APPS = [
-        ...
-        'rest_framework',
-    ]
-    ```
+## 一、甚麼是 app
+Django app 是一個獨立的模塊或組件，每個 app 可以獨立開發和測試，它包含了模型、視圖、模板等等，以實際例子來說明，假如我想要建立一個線上書店，就會分別需要有管理使用者和書籍的 app 等等。
 
 ## 二、建立、註冊app
 昨天建立完專案之後今天我們要建立一個 Django app，並註冊到專案中。
 
-1. 什麼是 app
-    - Django app 是一個獨立的模塊或組件，每個 app 可以獨立開發和測試，它包含了模型、視圖、模板等等，以實際例子來說明，假如我想要建立一個線上書店，就會分別需要有管理使用者和書籍的 app 等等。
-
-
-2. 建立 app
+1. 建立 app
     ```commandline
     python manage.py startapp dataset
     ```
@@ -49,7 +24,7 @@ DRF 的優點:
         - tests.py: 測試文件 
    
 
-3. 註冊 app
+2. 註冊 app
 
     - 在專案的 `settings.py` 中的 `INSTALLED_APPS` 中加入剛剛建立的 app
         ```python
@@ -59,7 +34,7 @@ DRF 的優點:
         ]
         ```
 
-4. 設定路由
+3. 設定路由
     - 在 app 中創建一個`urls.py`檔案
     - 在專案的 `urls.py` 中加入 app 的路由
         ```python
@@ -71,6 +46,8 @@ DRF 的優點:
        ```
 
 ## 三、建立簡易的 Django API
+在這部分，我將示範如何建立一個簡單的 Django API 來回傳 "Hello World"。這個例子能幫助你了解 Django 的基本視圖和路由設置，為後續構建更複雜的 API 打下基礎。
+
 1. 在 `views.py` 中建立一個 function 回傳 Hello World
     ```python
     from django.http import HttpResponse
@@ -96,6 +73,19 @@ DRF 的優點:
 4. 打開瀏覽器輸入 `http://127.0.0.1:8000/dataset/hello/` 看到以下實際畫面就成功了  
 
     ![img_2.png](img_2.png)
+
+> 我們也可以使用 JSON 回應，因為這可以提高 API 的兼容性和靈活性，符合現代Web開發的需求和最佳實踐。因此，將簡單的文本回應改為JSON回應是很有必要的，特別是在開發 RESTful API (下一章節會提到) 時。
+
+下方是示例
+```python
+from django.http import JsonResponse
+
+# Create your views here.
+def hello_world(request):
+    return JsonResponse({"message": "Hello World"})
+```
+打開瀏覽器後會看到以下實際畫面
+![img_3.png](img_3.png)
 
 ## 參考資料
 - https://blog.kyomind.tw/django-rest-framework-01/
