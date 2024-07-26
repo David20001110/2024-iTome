@@ -112,6 +112,10 @@ urlpatterns = [
 ]
 ```
 
+使用方法  
+> 創建書籍（Create Book）：
+>- 發送 POST 請求到 `/books/`，請求體包含書籍信息。
+
 ### 2. Read (讀取): 讀取操作用於獲取現有資源的信息。這通常對應於HTTP的 GET 方法。  
 在視圖中實現創建操作
 ```python
@@ -143,6 +147,30 @@ urlpatterns = [
     path('books/<int:pk>/', BookDetail.as_view()),
 ]
 ```
+
+使用方法
+>   讀取所有書籍（Read All Books）：  
+> - 發送 GET 請求到 `/books/`。  
+
+> 讀取單本書籍（Read Single Book）：  
+> - 發送 GET 請求到 `/books/<int:pk>/`，其中 pk 是書籍的ID。  
+
+
+### 3. Update (更新): 更新操作用於修改現有資源的信息。這通常對應於HTTP的 PUT 或 PATCH 方法。
+在上面的`BookDetail`視圖中，我們已經處理了更新操作。具體來說，`RetrieveUpdateDestroyAPIView`通過 PUT 或 PATCH 請求來處理資源的更新。
+
+使用方法
+> 更新書籍（Update Book）：
+> - 發送 PUT 或 PATCH 請求到 `/books/<int:pk>/`，請求體包含要更新的書籍信息。
+
+### 4. Delete (刪除): 刪除操作用於刪除現有資源。這通常對應於HTTP的 DELETE 方法。
+同樣，在上面的`BookDetail`視圖中，我們已經處理了刪除操作。`RetrieveUpdateDestroyAPIView`通過 DELETE 請求來處理資源的刪除。
+
+使用方法
+
+> 刪除書籍（Delete Book）：
+> - 發送 DELETE 請求到 `/books/<int:pk>/`，其中 pk 是書籍的ID。
+
 ## 參考資料
 - https://cindyliu923.medium.com/%E4%BB%80%E9%BA%BC%E6%98%AF-rest-restful-7667b3054371
 - https://aws.amazon.com/tw/what-is/restful-api/

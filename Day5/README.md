@@ -84,7 +84,7 @@ from django.http import JsonResponse
 def hello_world(request):
     return JsonResponse({"message": "Hello World"})
 ```
-打開瀏覽器後會看到以下實際畫面
+打開瀏覽器後會看到以下實際畫面  
 ![img_3.png](img_3.png)
 
 ## 參考資料
