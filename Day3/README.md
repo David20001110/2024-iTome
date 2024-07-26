@@ -21,7 +21,7 @@ MTV 架構是 Django 框架採用的一種設計模式，它代表了 Model-Temp
 ## MTV 架構流程
 針對流程的部分我會置了一個流程圖，從User端發送請求到讀取資料庫的資料，做業務邏輯處理，到最後瀏覽器接收響應呈現網頁。
 
-![terminal.png](MTV架構.png)
+![terminal.png](https://github.com/David20001110/2024-iTome/blob/master/Day3/MTV%E6%9E%B6%E6%A7%8B.png?raw=true)
 
 ### 參考資料
 - https://andyludeveloper.medium.com/%E7%8E%A9-django-party-3-mtv-%E6%9E%B6%E6%A7%8B-60e1188434c4

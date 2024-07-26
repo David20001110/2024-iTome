@@ -30,10 +30,10 @@
     python manage.py runserver
     ```
 - 終端機會顯示以下畫面
-![terminal.png](../Day4/terminal.png)  
+![terminal.png](https://github.com/David20001110/2024-iTome/blob/master/Day4/terminal.png?raw=true)  
 
 - 接著點開*http://127.0.0.1:8000*看到以下畫面代表成功建立
-![runsever.png](../Day4/runsever.png)
+![runsever.png](https://github.com/David20001110/2024-iTome/blob/master/Day4/runsever.png?raw=true)
 
 ## 二、項目結構說明
 ```
@@ -52,7 +52,7 @@
 - `mysite/__init__.py` 是一個空文件，告訴 Python 這個目錄應該被視為一個 Python package
 - `mysite/settings.py` 是 Django 主要設定檔包含資料庫配置、靜態文件路徑、已安裝的應用等
    - 註冊應用程式的部分: 創建應用程式後，需要將其註冊 settings.py 的 `INSTALLED_APPS` 列表中，這樣 Django 才能識別和使用這個應用程式。
-   - ![img.png](../Day5/installed.png)
+   - ![img.png](https://github.com/David20001110/2024-iTome/blob/master/Day5/installed.png?raw=true)
 - `mysite/urls.py` 定義了 URL 路由映射，它告訴 Django 當用戶請求特定 URL 時，應該調用哪個視圖來處理請求。
 - `mysite/asgi.py` 和 `mysite/wsgi.py` 這兩個文件負責配置和運行 Django 專案，使其能夠在各自兼容的 Web 服務器上運行。
 - 這些檔案是 Django 專案的基礎結構，你可以根據你的需求來修改或新增檔案

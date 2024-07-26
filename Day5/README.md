@@ -15,7 +15,7 @@ Django app 是一個獨立的模塊或組件，每個 app 可以獨立開發和�
     ```
     - `dataset` 是 app 的名稱，可以自行更改
     - 執行完後會看到 app 的結構如下:  
-    ![img.png](img.png)
+    ![img.png](https://github.com/David20001110/2024-iTome/blob/master/Day5/img.png?raw=true)
         - models.py: 定義模型
         - views.py: 定義視圖
         - admin.py: 註冊模型到管理站台
@@ -72,7 +72,7 @@ Django app 是一個獨立的模塊或組件，每個 app 可以獨立開發和�
    
 4. 打開瀏覽器輸入 `http://127.0.0.1:8000/dataset/hello/` 看到以下實際畫面就成功了  
 
-    ![img_2.png](img_2.png)
+    ![img_2.png](https://github.com/David20001110/2024-iTome/blob/master/Day5/img_2.png?raw=true)
 
 > 我們也可以使用 JSON 回應，因為這可以提高 API 的兼容性和靈活性，符合現代Web開發的需求和最佳實踐。因此，將簡單的文本回應改為JSON回應是很有必要的，特別是在開發 RESTful API (下一章節會提到) 時。
 
@@ -85,7 +85,7 @@ def hello_world(request):
     return JsonResponse({"message": "Hello World"})
 ```
 打開瀏覽器後會看到以下實際畫面  
-![img_3.png](img_3.png)
+![img_3.png](https://github.com/David20001110/2024-iTome/blob/master/Day5/img_3.png?raw=true)
 
 ## 參考資料
 - https://blog.kyomind.tw/django-rest-framework-01/
