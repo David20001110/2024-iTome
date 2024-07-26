@@ -59,7 +59,7 @@ path(route, view, kwargs=None, name=None)
 傳遞給視圖的附加參數。這是一個可選參數，允許將附加的關鍵字參數傳遞給視圖函數。
 
 
-### 完整範例
+## 三、完整範例
 以下是完整的項目設置，展示如何創建和連接視圖和URL。(從建立完 app 後開始)
 
 1. 在 `myapp/views.py` 中添加視圖函數：
@@ -116,9 +116,9 @@ python manage.py runserver
 7. 在瀏覽器中輸入對應的 URL 查看回傳結果
 
 
-## 二、總結
+## 四、總結
 視圖是 Django Web 應用程序的核心，它們接收 HTTP 請求並返回 HTTP 響應。在這篇文章中，我們學習了如何創建函數視圖和如何連接 URL。在下一篇文章中，我們將介紹如何使用模板（Templates）來渲染 HTML 頁面。
 
-## 參考資料
+## 五、參考資料
 - https://ithelp.ithome.com.tw/articles/10289461
 - https://developer.mozilla.org/zh-TW/docs/Learn/Server-side/Django/Home_page
