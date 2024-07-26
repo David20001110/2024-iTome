@@ -43,19 +43,21 @@ path(route, view, kwargs=None, name=None)
 參數說明
 1. route:  
 類型: 字符串  
-定義URL模式的字符串。它是用來匹配請求URL的部分。例如，'hello/' 將匹配以 hello/ 結尾的URL。路由中可以包含動態參數，使用尖括號 < > 括起來，例如，'books/<int:id>/' 表示URL中包含一個整數參數 id。
+它是用來匹配請求URL的部分簡單來說就是路徑。例如，`hello/`將匹配以 hello/ 結尾的URL。路由中可以包含動態參數，使用尖括號 < > 括起來，例如，`books/<int:id>/` 表示URL中包含一個整數參數 id。(day6時有提到)
 
 2. view:  
 類型: 可調用對象（如視圖函數或視圖類）  
-當URL模式匹配成功時，調用的視圖函數或視圖類。這個視圖負責處理請求並返回響應。
+當URL模式匹配成功時，調用的視圖函數或視圖類。這個視圖負責處理請求並呈現給 client。
 
-3. kwargs:  
+3. name:  
+類型: 字符串（默認為 None）  
+為這個URL做一個命名，這樣可以在Django的其他地方（如模板中）使用這個名稱來引用這個URL。
+
+
+4. kwargs:  
 類型: 字典（默認為 None）  
 傳遞給視圖的附加參數。這是一個可選參數，允許將附加的關鍵字參數傳遞給視圖函數。
 
-4. name:  
-類型: 字符串（默認為 None）  
-為這個URL模式命名，這樣可以在Django的其他地方（如模板中）使用這個名稱來引用這個URL。命名URL模式有助於提高代碼的可讀性和可維護性。
 
 ### 完整範例
 以下是完整的項目設置，展示如何創建和連接視圖和URL。(從建立完 app 後開始)
@@ -90,8 +92,8 @@ from django.urls import path
 from myapp import views
 
 urlpatterns = [
-    path('hello/', views.hello),
-    path('world/', views.world),
+    path('hello/', views.hello, name='hello'),
+    path('world/', views.world, name='world'),
 ]
 ```
 
@@ -101,7 +103,8 @@ python manage.py runserver
 ```
 
 5. 執行結果
-- 打開瀏覽器輸入 `http://
+- 打開瀏覽器輸入 http://127.0.0.1:8000/myapp/world/ 做查看
+- 打開瀏覽器輸入 http://127.0.0.1:8000/myapp/hello/ 做查看
 
 ### 建立的步驟
 1. 在 app 中的 `views.py` 中建立函數視圖
@@ -110,7 +113,7 @@ python manage.py runserver
 4. 在專案的 `urls.py` 中設定路由
 5. 在 app 的 `urls.py` 中引入剛剛建立的函數視圖
 6. 啟動服務
-7. 在瀏覽器中輸入對應的 URL 查看結果
+7. 在瀏覽器中輸入對應的 URL 查看回傳結果
 
 
 ## 二、總結
