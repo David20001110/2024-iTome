@@ -1,8 +1,15 @@
 # Day 8 - 模板（Templates）
+- 什麼是 Template
 - 建立template
 - 基礎語法
 - 連接views
 - 模板繼承
+
+## 一、什麼是 Template
+
+模板是 Django 用來生成 HTML 的文件。
+它們允許我們將數據插入到靜態 HTML 中，並使網站頁面動態化。
+模板系統使用標籤和過濾器來控制展示和處理數據。
 
 ## 一、建立模板
 1. 在 app 的目錄下建立一個 `templates` 目錄
