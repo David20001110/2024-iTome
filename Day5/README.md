@@ -30,7 +30,7 @@ Django app 是一個獨立的模塊或組件，每個 app 可以獨立開發和�
         ```python
         INSTALLED_APPS = [
             ...
-            'dataset',
+            'dataset.apps.DatasetConfig',
         ]
         ```
 
@@ -50,7 +50,7 @@ Django app 是一個獨立的模塊或組件，每個 app 可以獨立開發和�
         ```commandline
         python manage.py migrate
         ```
-        ![img_4.png](img_4.png)
+        ![img_4.png](https://github.com/David20001110/2024-iTome/blob/master/Day5/img_4.png?raw=true)
 
 ## 三、建立簡易的 Django API
 在這部分，我將示範如何建立一個簡單的 Django API 來回傳 "Hello World"。這個例子能幫助你了解 Django 的基本視圖和路由設置，為後續構建更複雜的 API 打下基礎。

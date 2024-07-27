@@ -84,6 +84,12 @@ class BookSerializer(serializers.ModelSerializer):
         fields = '__all__'
 ```
 
+進行文件遷移
+```commandline
+python manage.py makemigrations
+python manage.py migrate
+```
+
 ### 1. 創建資源 (Create): 創建操作用於新增一個新的資源。這通常對應於HTTP的 POST 方法。  
 在視圖中實現創建操作
 ```python
