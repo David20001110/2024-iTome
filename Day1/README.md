@@ -19,8 +19,8 @@
 | 5.  | 建立第一個app以及簡易的API                    | - 什麼是app <br>- 建立、註冊app <br>- 建立簡易API                                                                   |
 | 6.  | 介紹DRF以及RESTful                      | - 介紹DRF <br>- 介紹 RESTful <br>- 使用Django REST framework創建API <br>- CRUD操作                                |
 | 7.  | 視圖（Views）                           | - function based views <br>- 建立views <br>- 如何連接URL                                                      |
-| 8.  | 模板（Templates）                       | - 建立template <br>- 基礎語法 <br>- 連接views <br>- 模板繼承                                                        |
-| 9.  | Templates 進階                        | - 使用過濾器 <br>- 加載靜態文件 (配置路徑、 使用CSS美化模板)                                                                  |
+| 8.  | 模板（Templates）                       | - 什麼是 template <br> - 建立template <br>- 基礎語法 <br>- 連接views                                               |
+| 9.  | Templates 進階                        | - 使用過濾器 <br> - 加載靜態文件 (配置路徑、 使用CSS美化模板) <br>- 模板繼承                                                      |
 | 10. | 模型（Models）                          | - 介紹ORM <br>- 建立 Models <br>- 字段類型和屬性                                                                   |
 | 11. | 資料庫介紹、遷移、基本指令                       | - 資料遷移 ( 什麼是 makemigrations、什麼是 migrate ) <br>- 查看遷移狀況                                                  |
 | 12. | 資料庫操作                               | - 使用shell command <br>- 創建和保存資料 <br>- 新增 修改 刪除                                                          |

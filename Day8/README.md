@@ -1,9 +1,9 @@
 # Day 8 - 模板（Templates）
 - 什麼是 Template
 - 建立template
-- 基礎語法
 - 連接views
-- 模板繼承
+- 基礎語法
+
 
 ## 一、什麼是 Template
 
@@ -31,27 +31,7 @@
    </html>
    ```
 
-## 二、基礎語法
-模板語言包括標籤和過濾器，用來插入動態數據和控制HTML輸出。
-- **變數**: 用 {{ }} 包圍  
-    例如：
-    ```html
-    <p>{{ name }}</p>
-    ```
-- **標籤**: 用 {% %} 包圍，用來執行邏輯操作，如條件和迴圈：
-  ```html
-  {% if user.is_authenticated %}
-     <p>Welcome, {{ user.username }}!</p>
-  {% else %}
-    <p>Please log in.</p>
-  {% endif %}
-  ```
-- **過濾器**: 過濾器用 | 符號連接，用來修改變量的值
-  ```html
-  <p>{{ message|upper }}</p>
-  ```
-
-## 三、連接views
+## 二、連接views
 1. 在 app 的 `views.py` 中引入 `render` 函數
     ```python
     from django.shortcuts import render
@@ -78,49 +58,123 @@
     - 這樣就成功連結我們建立的 template
     ![img.png](img.png)
 
-## 四、模板繼承
-模板繼承允許我們定義一個基礎模板，並在其他模板中擴展它。這有助於保持模板的一致性和重用性。
-1. 創建一個 `base.html` : 定義頁面的通用結構
-    - 在基本模板中，使用 {% block %} 標籤來定義佔位符。這些標籤內部的內容可以在子模板中被替換或擴展。
-    ```html
-    <!DOCTYPE html>
-    <html lang="en">
-    
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}{% endblock %}</title>
-    </head>
-    
-    <body>
-        {% block content %}
-        {% endblock %}
-    </body>
-    
-    </html>
-    ```
-
-2. 在 `index.html` 文件中繼承 `base.html`
-    - 在子模板中，我們可以使用 {% extends %} 標籤來繼承基本模板，並使用 {% block %} 標籤來填充或覆蓋基本模板中的佔位符。
-    ```html
-    {% extends 'base.html' %}
-    
-    {% block title %}
-        Index Page
-    {% endblock %}
-    
-    {% block content %}
-        <h1>Hello, Django!</h1>
-    {% endblock %}
-    ```
-
 ### 建立的步驟
 1. 在 app 中的 `views.py` 中建立函數視圖
 2. 在 app 中的 `urls.py` 中設定路由
 3. 在 app 的 `templates` 目錄下建立模板
 4. 在模板中使用基礎語法 (在模板中使用模板繼承)
 6. 啟動服務查看結果
+
+ 
+
+### 建立範例
+為了方便顯示下方語法執行的結果我先建立一些範例 (這章節先不詳細介紹 model 的建立方法)
+
+1. 在 `app/models.py` 建立一個模型 :
+    ```python
+    from django.db import models
+    
+    class UserProfile(models.Model):
+        username = models.CharField(max_length=10)
+        is_authenticated = models.BooleanField(default=False)
+        message = models.TextField(max_length=100)
+    
+        def __str__(self):
+            return self.username
+    ```
+
+2. 執行遷移 :
+    ```commandline
+    python manage.py makemigrations
+    python manage.py migrate
+    ```
+    
+3. 在 Django 管理界面或 shell 中創建一個用戶示例 :
+    ```shell
+    python manage.py shell
+    
+    from my_app.models import UserProfile
+    UserProfile.objects.create(username='David', is_authenticated=True, message='This is David profile.')
+    ```
+4. 在 `myapp/views.py` 中創建一個新視圖來顯示模板：
+    ```python
+    from django.shortcuts import render
+    from .models import UserProfile
+    
+    def index_user(request):
+        user = UserProfile.objects.first()  # 自己建立的用戶
+        return render(request, 'my_app/user.html', {'user': user})
+    ```
+
+5. 在 `myapp/urls.py` 中配置 URL 模式：
+    ```python
+   from django.urls import path
+   from my_app import views
+   
+   urlpatterns = [
+       path('user/', views.index_user, name='user')
+   ]
+    ```
+
+## 三、基礎語法
+模板語言包括標籤和過濾器，用來插入動態數據和控制HTML輸出。 
+
+- **變數**: 用 {{ }} 包圍  
+    例如：
+    ```html
+    <p>{{ name }}</p>
+    ```
+- **標籤**: 用 {% %} 包圍，用來執行邏輯操作，如條件判斷和迴圈
+  ```html
+  {% if user.is_authenticated %}
+     <p>歡迎, {{ user.username }}!</p>
+  {% else %}
+    <p>你尚未登入.</p>
+  ```
+- **註解**: 用 {# #} 包圍
+  ```html
+  {# 這是個註解 #}
+  ```
+- **過濾器**: 過濾器用 | 符號連接，用來修改變量的值(ex: 將文字全部變成大寫)
+  ```html
+  <p>{{ message|upper }}</p>
+  ```     
+
+<br>
+
+> 接下來實際看看效果如何  
+
+在 `myapp/templates/` 目錄下創建 user.html 文件
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我的網站</title>
+</head>
+<body>
+    {# 變數插入 #}
+    <p>用戶名: {{ user.username }}</p>
+    
+    {# 條件標籤 #}
+    {% if user.is_authenticated %}
+        <p>歡迎, {{ user.username }}!</p>
+    {% else %}
+        <p>你尚未登入.</p>
+    {% endif %}
+
+    {# 過濾器 #}
+    <p>{{ user.message | upper }}</p>
+</body>
+</html>
+
+```
+
+執行結果  
+![img_1.png](img_1.png)
+- 註解的內容不會顯示出來
+- 標籤的地方因為 David 的 `is_authenticated` 欄位是 True，所以會顯示歡迎
+- message 的部分全部變成大寫
 
 ## 五、參考資料
 
