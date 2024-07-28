@@ -119,8 +119,11 @@
 ## 三、基礎語法
 模板語言包括標籤和過濾器，用來插入動態數據和控制HTML輸出。 
 
-- **變數**: 用 {{ }} 包圍  
-    例如：
+- **註解**: 用 {# #} 包圍
+  ```html
+  {# 這是個註解 #}
+  ```
+- **變數**: 用 {{ }} 包圍
     ```html
     <p>{{ name }}</p>
     ```
@@ -130,10 +133,6 @@
      <p>歡迎, {{ user.username }}!</p>
   {% else %}
     <p>你尚未登入.</p>
-  ```
-- **註解**: 用 {# #} 包圍
-  ```html
-  {# 這是個註解 #}
   ```
 - **過濾器**: 過濾器用 | 符號連接，用來修改變量的值(ex: 將文字全部變成大寫)
   ```html
@@ -149,8 +148,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <head>
     <meta charset="UTF-8">
-    <title>我的網站</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>基礎語法範例</title>
+</head>
 </head>
 <body>
     {# 變數插入 #}
