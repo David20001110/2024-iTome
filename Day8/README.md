@@ -13,8 +13,22 @@
 
 ## 一、建立模板
 1. 在 app 的目錄下建立一個 `templates` 目錄
-2. 在 `templates` 目錄下建立一個 `index.html` 文件
-3. 在 `index.html` 文件中輸入以下內容：
+2. 在 `templates` 目錄下建立一個 app 目錄
+3. 在 app 目錄下建立一個 `index.html` 文件
+    ```commandline
+    myapp/
+    ├── __init__.py
+    ├── admin.py
+    ├── apps.py
+    ├── models.py
+    ├── tests.py
+    ├── urls.py
+    ├── views.py
+    └── templates/
+        └── my_app/
+            └── index.html
+    ```
+3. 在 `index.html` 文件中輸入以下內容 (快捷鍵: 輸入doc + `tab鍵`)：
     ```html
    <!DOCTYPE html>
    <html lang="en">
