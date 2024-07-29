@@ -120,7 +120,7 @@
     python manage.py runserver
     ```
     - 這樣就成功連結我們建立的 template  
-    ![img.png](img.png)
+    ![img.png](https://github.com/David20001110/2024-iTome/blob/master/Day9/img.png?raw=true)
 ## 三、加載靜態文件
 在 Django 中提供了靜態文件管理系統，使得在模板中加載 CSS、JavaScript 和圖像等靜態文件。靜態文件通常存儲在 `static` 目錄中。(這次我使用 css 來做示範)
 
@@ -183,4 +183,4 @@ STATIC_URL = '/static/'
     python manage.py runserver
     ```
     - 這樣就成功連結我們建立的 css 靜態文件   
-    ![img_1.png](img_1.png)
+    ![img_1.png](https://github.com/David20001110/2024-iTome/blob/master/Day9/img_1.png?raw=true)
