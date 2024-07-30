@@ -73,7 +73,8 @@ Django 是一個 python 的 Web 框架它提供了豐富的工具和內置功能
     ```
     django-admin --version
     ```
-
+## 四、總結
+這篇文章主要是介紹了 Django 是什麼，以及如何安裝 Django 和建立開發環境。下一篇文章我們會介紹 MTV 架構。
 
 ## 四、參考資料
 - https://blog.kyomind.tw/python-poetry/
