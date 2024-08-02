@@ -27,13 +27,13 @@ Django 的遷移系統自動生成和應用這些變更，讓開發者不需要�
 ```commandline
 python manage.py makemigrations
 ```
-![img_1.png](img_1.png)
+![img_1.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/img_1.png?raw=true)
 - 執行完後就會看到 Create model UserProfile 的訊息，代表成功建立遷移檔案
 
 ```commandline
 python manage.py migrate
 ```
-![img_2.png](img_2.png)
+![img_2.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/img_2.png?raw=true)
 - 執行完後就會看到 Applying myapp.0001_initial... OK 的訊息，代表成功將遷移檔案應用到資料庫中 _(因為這裡我是先建立又刪除再建立所以會顯示0003)_
 
 我們可以自己新增一筆資料到資料庫中
@@ -50,14 +50,14 @@ user.save()
 - 建立一筆資料
 
 當出現以下的資料那就代表成功建立資料表以及一筆資料
-![img.png](img.png)
+![img.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/img.png?raw=true)
 
 ## 二、查看遷移狀況
 我們可以使用以下指令來查看遷移的狀況，查看哪些遷移已經被應用
 ```commandline
 python manage.py showmigrations
 ```
-![img_3.png](img_3.png)
+![img_3.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/img_3.png?raw=true)
 
 > 這邊補充一下我是使用 pycharm 專業版內建的 Database 工具來查看資料庫的資料，可以直接在IDE中查看資料庫的資料，非常方便。
 > 也可以使用一些第三方的工具來查看資料庫的資料，例如：`DBeaver`、`Navicat`、`HeidiSQL`等等。
