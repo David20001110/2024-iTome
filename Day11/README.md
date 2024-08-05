@@ -36,21 +36,6 @@ python manage.py migrate
 ![img_2.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/img_2.png?raw=true)
 - 執行完後就會看到 Applying myapp.0001_initial... OK 的訊息，代表成功將遷移檔案應用到資料庫中 _(因為這裡我是先建立又刪除再建立所以會顯示0003)_
 
-我們可以自己新增一筆資料到資料庫中
-```commandline
-python manage.py shell
-```
-- 進入 Django 提供的交互式 shell，可以直接操作資料庫
-
-```python
-from myapp.models import UserProfile
-user = UserProfile(username='David', is_authenticated=True, message='This is David profile.')
-user.save()
-```
-- 建立一筆資料
-
-當出現以下的資料那就代表成功建立資料表以及一筆資料
-![img.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/img.png?raw=true)
 
 ## 二、查看遷移狀況
 我們可以使用以下指令來查看遷移的狀況，查看哪些遷移已經被應用
