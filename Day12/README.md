@@ -42,6 +42,7 @@ UserProfile.objects.bulk_create([
     UserProfile(username='Jerry', is_authenticated=True, message='This is Jerry profile.')
 ])
 ```
+![img_2.png](img_2.png)
 
 ## 三、修改和刪除
 
