@@ -53,7 +53,18 @@ users = UserProfile.objects.order_by('username')
 除了基本的查詢之外，Django 還提供了一些進階的查詢方法，用於執行複雜的查詢操作。  
 (為了方便講解進階查詢的做法我這裡會新建不一樣的 models 做講解)
 
+```python
+from django.db import models
 
+class Article(models.Model):
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    author = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.title
+```
 
 ### 1. 聚合函數
 
@@ -84,6 +95,8 @@ from django.db.models import Q
 ```
 
 ### 3. 排除篩選 
-
+```python
+non_django_articles = Article.objects.exclude(title__contains='Django')
+```
 ## 、參考資料
 - https://ithelp.ithome.com.tw/articles/10301965
