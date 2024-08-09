@@ -178,7 +178,8 @@ urlpatterns = [
 > - 發送 DELETE 請求到 `/books/<int:pk>/`，其中 pk 是書籍的ID。
 
 ## 五、總結
-在這篇文章中，我們介紹了 DRF 和 RESTful API 的基本概念，並通過一個簡單的示例展示了 CRUD 的操作C
+在這篇文章中，我們介紹了 DRF 和 RESTful API 的基本概念，並通過一個簡單的示例展示了 CRUD 的操作。下一篇文章中，我們將介紹序列化器 (Serializer)
+
 
 ## 六、參考資料
 - https://cindyliu923.medium.com/%E4%BB%80%E9%BA%BC%E6%98%AF-rest-restful-7667b3054371
