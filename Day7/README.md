@@ -1,124 +1,200 @@
-# Day 7 - 視圖（Views）和 URLS
-
-- 視圖和 URLS
-- function based views
-- 建立views
-- 如何連接URL
-
-在 Day5 的時候有建立簡易的 API。在這篇文章中，我們將繼上次來學習視圖和 URL 的如何運作。  
-在 Django 中 Views 主要是呈現 WHAT information 給 client 端，而 URL 則是決定 WHERE 是這些 information 呈現的地方。我們可以將每個 View 和 URL 視為網站上的特定網頁。
-
-## 一、視圖（Views）
-
-視圖是 Django 應用程序的核心，它們會接收 HTTP 請求並返回 HTTP response，它可以是函數或基於類的視圖，class base view 的部份我們會在後面的章節才會詳細說明。
+# Day 8 - 模板（Templates）
+- 什麼是 Template
+- 建立template
+- 連接views
+- 基礎語法
 
 
-### 1. function based views
-函數型視圖是以Python函數的形式定義的視圖，它接收一個 Web 請求並返回一個 Web 響應。它們簡單且易於理解，像是在 Day5 時所建立的範例 。
+## 一、什麼是 Template
 
-我們可以在一個 `myapp/views.py` 中建立不止一個函數視圖。(以下我使用 JSON 回應)
-```python
-from django.http import JsonResponse
+模板是 Django 用來生成 HTML 的文件。
+它們允許我們將數據插入到靜態 HTML 中，並使網站頁面動態化。
+模板系統使用標籤和過濾器來控制展示和處理數據。
 
-def hello(request):
-    return JsonResponse({"message": "Hello"})
+## 一、建立模板
+1. 在 app 的目錄下建立一個 `templates` 目錄
+2. 在 `templates` 目錄下建立一個 app 目錄
+3. 在 app 目錄下建立一個 `index.html` 文件
+    ```commandline
+    myapp/
+    ├── __init__.py
+    ├── admin.py
+    ├── apps.py
+    ├── models.py
+    ├── tests.py
+    ├── urls.py
+    ├── views.py
+    └── templates/
+        └── my_app/
+            └── index.html
+    ```
+3. 在 `index.html` 文件中輸入以下內容 (快捷鍵: 輸入doc + `tab鍵`)：
+    ```html
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Document</title>
+   </head>
+   <body>
+       <h1>Welcome Django</h1>
+   </body>
+   
+   </html>
+   ```
 
-def world(request):
-    return JsonResponse({"message": "World"})
-```
+## 二、連接views
+1. 在 app 的 `views.py` 中引入 `render` 函數
+    ```python
+    from django.shortcuts import render
+    ```
+2. 在視圖函數中使用 `render` 函數返回模板
+    ```python
+    def index_view(request):
+        # 匹配到我們建立的 html 檔
+        return render(request, 'my_app/index.html')
+    ```
+3. 在 app 的 `urls.py` 中設定路由
+    ```python
+    from django.urls import path
+    from myapp import views
 
-## 二、URLS
-URL 配置（URLconf）可以指 Django 項目中的兩個層級，整個項目的URL配置以及每個應用（app）中的URL配置。
-每個 URL 模式都與一個視圖函數或視圖類相關聯，當用戶訪問該 URL 時，Django將調用對應的視圖來處理請求。
-
-在前面的章節就有分別提到這兩者 URL設置的不同，這邊再次提醒一次 Django 的 URL 設置是由專案的 `urls.py` 和 app 的 `urls.py` 兩個檔案組成。
-
-### path() 函數
-`path()` 函數是 Django 中定義 URL 模式的主要方法，它將特定的 URL 模式映射到相應的視圖。path 函數來自 `django.urls` 模組。
-
-語法：
-```python
-path(route, view, kwargs=None, name=None)
-```
-參數說明
-1. route:  
-類型: 字符串  
-它是用來匹配請求URL的部分簡單來說就是路徑。例如，`hello/`將匹配以 hello/ 結尾的URL。路由中可以包含動態參數，使用尖括號 < > 括起來，例如，`books/<int:id>/` 表示URL中包含一個整數參數 id。(day6時有提到)
-
-2. view:  
-類型: 可調用對象（如視圖函數或視圖類）  
-當URL模式匹配成功時，調用的視圖函數或視圖類。這個視圖負責處理請求並呈現給 client。
-
-3. name:  
-類型: 字符串（默認為 None）  
-為這個URL做一個命名，這樣可以在Django的其他地方（如模板中）使用這個名稱來引用這個URL。
-
-
-4. kwargs:  
-類型: 字典（默認為 None）  
-傳遞給視圖的附加參數。這是一個可選參數，允許將附加的關鍵字參數傳遞給視圖函數。
-
-
-## 三、完整範例
-以下是完整的項目設置，展示如何創建和連接視圖和URL。(從建立完 app 後開始)
-
-1. 在 `myapp/views.py` 中添加視圖函數：
-```python
-from django.http import JsonResponse
-
-def hello(request):
-    return JsonResponse({"message": "Hello"})
-
-def world(request):
-    return JsonResponse({"message": "World"})
-```
-
-2. 在專案的 `urls.py` 中引入 app 的路由 :
-```python
-# urls.py
-from django.urls import path, include
-from django.contrib import admin
-    
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('myapp/', include('myapp.urls')),
-]
-```
-
-3. 在 app 中的 `urls.py` 中設定路由 :
-```python
-# urls.py
-from django.urls import path
-from myapp import views
-
-urlpatterns = [
-    path('hello/', views.hello, name='hello'),
-    path('world/', views.world, name='world'),
-]
-```
-
-4. 啟動服務 :
-```commandline
-python manage.py runserver
-```
-
-5. 執行結果
-- 打開瀏覽器輸入 http://127.0.0.1:8000/myapp/world/ 做查看
-- 打開瀏覽器輸入 http://127.0.0.1:8000/myapp/hello/ 做查看
+    urlpatterns = [
+        path('index/', views.index_view, name='index_view'),
+    ]
+    ```
+4. 執行查看結果
+    ```commandline
+    python manage.py runserver
+    ```
+    - 這樣就成功連結我們建立的 template
+    ![img.png](img.png)
 
 ### 建立的步驟
 1. 在 app 中的 `views.py` 中建立函數視圖
-2. 在 `views.py` 中引入 `HttpResponse` or `JsonResponse` 類別
-3. 在函數中返回一個 `HttpResponse` or `JsonResponse` 物件
-4. 在專案的 `urls.py` 中設定路由
-5. 在 app 的 `urls.py` 中引入剛剛建立的函數視圖
-6. 啟動服務
-7. 在瀏覽器中輸入對應的 URL 查看回傳結果
+2. 在 app 中的 `urls.py` 中設定路由
+3. 在 app 的 `templates` 目錄下建立模板
+4. 在模板中使用基礎語法 (在模板中使用模板繼承)
+6. 啟動服務查看結果
 
+ 
 
-## 四、總結
-視圖是 Django Web 應用程序的核心，它們接收 HTTP 請求並返回 HTTP 響應。在這篇文章中，我們學習了如何創建函數視圖和如何連接 URL。在下一篇文章中，我們將介紹如何使用模板（Templates）來渲染 HTML 頁面。
+### 建立範例
+為了方便顯示下方語法執行的結果我先建立一些範例 (這章節先不詳細介紹 model 的建立方法)
 
-## 五、參考資料
-- https://ithelp.ithome.com.tw/articles/10289461
-- https://developer.mozilla.org/zh-TW/docs/Learn/Server-side/Django/Home_page
+1. 在 `app/models.py` 建立一個模型 :
+    ```python
+    from django.db import models
+    
+    class UserProfile(models.Model):
+        username = models.CharField(max_length=10)
+        is_authenticated = models.BooleanField(default=False)
+        message = models.TextField(max_length=100)
+    
+        def __str__(self):
+            return self.username
+    ```
+
+2. 執行遷移 :
+    ```commandline
+    python manage.py makemigrations
+    python manage.py migrate
+    ```
+    
+3. 在 Django 管理界面或 shell 中創建一個用戶示例 :
+    ```shell
+    python manage.py shell
+    
+    from my_app.models import UserProfile
+    UserProfile.objects.create(username='David', is_authenticated=True, message='This is David profile.')
+    ```
+4. 在 `myapp/views.py` 中創建一個新視圖來顯示模板：
+    ```python
+    from django.shortcuts import render
+    from .models import UserProfile
+    
+    def index_user(request):
+        user = UserProfile.objects.first()  # 自己建立的用戶
+        return render(request, 'my_app/user.html', {'user': user})
+    ```
+
+5. 在 `myapp/urls.py` 中配置 URL 模式：
+    ```python
+   from django.urls import path
+   from my_app import views
+   
+   urlpatterns = [
+       path('user/', views.index_user, name='user')
+   ]
+    ```
+
+## 三、基礎語法
+模板語言包括標籤和過濾器，用來插入動態數據和控制HTML輸出。 
+
+- **註解**: 用 {# #} 包圍
+  ```html
+  {# 這是個註解 #}
+  ```
+- **變數**: 用 {{ }} 包圍
+    ```html
+    <p>{{ name }}</p>
+    ```
+- **標籤**: 用 {% %} 包圍，用來執行邏輯操作，如條件判斷和迴圈
+  ```html
+  {% if user.is_authenticated %}
+     <p>歡迎, {{ user.username }}!</p>
+  {% else %}
+    <p>你尚未登入.</p>
+  ```
+- **過濾器**: 過濾器用 | 符號連接，用來修改變量的值(ex: 將文字全部變成大寫)
+  ```html
+  <p>{{ message|upper }}</p>
+  ```     
+
+<br>
+
+> 接下來實際看看效果如何  
+
+在 `myapp/templates/` 目錄下創建 user.html 文件
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>基礎語法範例</title>
+</head>
+</head>
+<body>
+    {# 變數插入 #}
+    <p>用戶名: {{ user.username }}</p>
+    
+    {# 條件標籤 #}
+    {% if user.is_authenticated %}
+        <p>歡迎, {{ user.username }}!</p>
+    {% else %}
+        <p>你尚未登入.</p>
+    {% endif %}
+
+    {# 過濾器 #}
+    <p>{{ user.message | upper }}</p>
+</body>
+</html>
+
+```
+
+執行結果  
+![img_1.png](img_1.png)
+- 註解的內容不會顯示出來
+- 標籤的地方因為 David 的 `is_authenticated` 欄位是 True，所以會顯示歡迎
+- message 的部分全部變成大寫
+
+## 五、總結
+
+在這篇文章中，我們學習了如何建立模板、連接視圖和模板、以及模板語言的基礎語法。模板是 Django 用來生成 HTML 的文件，它允許我們將數據插入到靜態 HTML 中，並使網站頁面動態化。模板系統使用標籤和過濾器來控制展示和處理數據。在下一篇文章中，我們將學習進階的模板使用。
+

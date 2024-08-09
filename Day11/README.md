@@ -1,54 +1,76 @@
-# Day 11 - 資料庫遷移、基本指令
+# Day 12 - 資料庫操作
 
-- 資料遷移
-   - 什麼是 makemigrations
-   - 什麼是 migrate
-- 查看遷移狀況
+- 使用shell command
+- 創建和保存資料
+- 新增 修改 刪除
 
-## 一、資料遷移
 
-資料遷移是將 app 或是模型（Model）中的變更應用到資料庫的過程。這包括創建表、修改表結構、刪除表等操作。
-Django 的遷移系統自動生成和應用這些變更，讓開發者不需要手動編寫 SQL 語句，
-它實際上是一個Python的檔案，可以同步Models.py裡的類別以及資料庫，因此只要有更動 Model 就需要去執行遷移的動作，主要會去執行的動作兩個一個是 makemigrations 一個是 migrate。
+## 一、使用shell command
 
-### 1. 什麼是 makemigrations
-- `makemigrations` 是一個用於將模型更改的遷移文件生成到專案中的命令。
-- 當我們執行  `makemigrations` 命令對模型進行更改時，Django 會自動檢測到這些更改，並生成一個 python 的遷移文件，這個遷移文件包含了對模型的更改操作。
-
-### 2. 什麼是 migrate
-- `migrate` 是一個用於將遷移文件應用到資料庫的命令。
-- 當我們執行 `migrate` 命令時，Django 會將遷移文件應用到資料庫，這樣我們的資料庫就會根據模型的更改進行更新。
-- `migrate` 命令會自動檢測專案中的遷移文件，並將這些遷移文件應用到資料庫中，使資料庫和模型保持同步。
-
-### 實際操作
-我們延續昨天建立的 `UserProfile` model 去進行遷移的操作
-
+Django 提供了一個交互式 shell，可以讓我們直接操作資料庫，這樣我們可以快速地測試和調試我們的 app。
 
 ```commandline
-python manage.py makemigrations
+python manage.py shell
 ```
-![img_1.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/img_1.png?raw=true)
-- 執行完後就會看到 Create model UserProfile 的訊息，代表成功建立遷移檔案
 
-```commandline
-python manage.py migrate
+## 二、創建(新增)和保存資料
+在 shell 中，我們可以直接操作資料庫，要在資料庫中創建和保存一個新的實例，可以使用模型的 `create` 方法或先創建實例然後調用 `save` 兩種方法。
+
+使用 create 方法：
+```python
+from my_app.models import UserProfile
+new_post = UserProfile.objects.create(username='David', is_authenticated=True, message='This is David profile.')
 ```
-![img_2.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/img_2.png?raw=true)
-- 執行完後就會看到 Applying myapp.0001_initial... OK 的訊息，代表成功將遷移檔案應用到資料庫中 _(因為這裡我是先建立又刪除再建立所以會顯示0003)_
 
+使用 save 方法：
+```python
+from my_app.models import UserProfile
+user = UserProfile(username='David', is_authenticated=True, message='This is David profile.')
+user.save()
+```  
 
-## 二、查看遷移狀況
-我們可以使用以下指令來查看遷移的狀況，查看哪些遷移已經被應用
-```commandline
-python manage.py showmigrations
+當出現以下的資料那就代表成功建立資料表以及一筆資料
+![img.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/img.png?raw=true)
+
+除了單獨創建之外還有批量創建的方法
+
+bulk create 批次創建，一次創建三筆資料
+```python
+UserProfile.objects.bulk_create([
+    UserProfile(username='David', is_authenticated=True, message='This is David profile.'),
+    UserProfile(username='Tom', is_authenticated=True, message='This is Tom profile.'),
+    UserProfile(username='Jerry', is_authenticated=True, message='This is Jerry profile.')
+])
 ```
-![img_3.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/img_3.png?raw=true)
+![img_2.png](img_2.png)
 
-> 這邊補充一下我是使用 pycharm 專業版內建的 Database 工具來查看資料庫的資料，可以直接在IDE中查看資料庫的資料，非常方便。
-> 也可以使用一些第三方的工具來查看資料庫的資料，例如：`DBeaver`、`Navicat`、`HeidiSQL`等等。
+## 三、修改和刪除
 
-## 三、總結
-今天我們學習了什麼是資料遷移以及如何進行資料遷移。下一篇文章我們將會學習如何進行資料的增刪改查。
+我們可以使用以下方法來修改、刪除資料表中的資料。
 
-## 四、參考資料
-- https://ithelp.ithome.com.tw/articles/10298464
+### 1. 修改資料
+
+```python
+# 修改資料
+user = UserProfile.objects.get(username='David')
+user.message = 'This is updated message.'
+user.save()
+```
+- 這裡我們先找到 `username` 為 `David` 的資料，然後修改 `message` 的內容，最後保存。
+![img.png](img.png)
+
+### 2. 刪除資料
+
+```python
+# 刪除資料
+user = UserProfile.objects.get(username='David')
+user.delete()
+```
+- 這裡我們先找到 `username` 為 `David` 的資料，然後刪除。
+![img_1.png](img_1.png)
+
+## 四、總結
+今天我們學習了如何使用 shell command 來操作資料庫，以及如何創建、保存、修改和刪除資料表中的資料。下一篇文章我們將會學習如何進行資料的查詢。
+
+## 五、參考資料
+- https://ithelp.ithome.com.tw/articles/10301357

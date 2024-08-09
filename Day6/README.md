@@ -1,185 +1,124 @@
-# Day 6 - 介紹 DRF 以及 RESTful
-- 介紹DRF
-- 介紹RESTful
-- 使用Django REST framework創建API
-- CRUD操作
+# Day 7 - 視圖（Views）和 URLS
 
-## 一、介紹 DRF
+- 視圖和 URLS
+- function based views
+- 建立views
+- 如何連接URL
 
-1. 甚麼是 DRF  
-   DRF(Django REST framework) 是一個功能強大的工具包，專門為構建 Web API 而設計的套件。提供了一套簡潔且強大的工具來處理API的各個方面，如強大的序列化器、權限管理、通用 API 視圖。
+在 Day5 的時候有建立簡易的 API。在這篇文章中，我們將繼上次來學習視圖和 URL 的如何運作。  
+在 Django 中 Views 主要是呈現 WHAT information 給 client 端，而 URL 則是決定 WHERE 是這些 information 呈現的地方。我們可以將每個 View 和 URL 視為網站上的特定網頁。
 
-   DRF 的優點:
-   - 快速開發 API
-   - 強大的序列化器
-   - 內建認證和權限控制
-   - 客製化 API 視圖
-   - 自動生成 API 文檔
+## 一、視圖（Views）
+
+視圖是 Django 應用程序的核心，它們會接收 HTTP 請求並返回 HTTP response，它可以是函數或基於類的視圖，class base view 的部份我們會在後面的章節才會詳細說明。
 
 
-2. 安裝 DRF
-    ```commandline
-    poetry add djangorestframework
-    ```
+### 1. function based views
+函數型視圖是以Python函數的形式定義的視圖，它接收一個 Web 請求並返回一個 Web 響應。它們簡單且易於理解，像是在 Day5 時所建立的範例 。
 
-3. 將 rest_framework 添加到 Django 項目的 `INSTALLED_APPS` 中
-    ```python
-    INSTALLED_APPS = [
-        ...
-        'rest_framework',
-    ]
-    ```
-## 二、介紹 RESTful
-在講 RESTful 時實際上是在談論 REST 架構風格以及它的實現方式，後綴`ful`通常指的是系統或API符合REST架構風格的程度，所以要先來介紹 REST 架構。
-
-1. REST 介紹 :  
-REST 的全名是 Representational State Transfer 它是一種軟體架構的設計風格，用於構建可擴展且易於維護的Web服務。它基於HTTP協議，使用簡單的URL結構和標準的HTTP方法   。
-
-2. RESTful API的設計原則 :  
-- **唯一資源識別符**: 使用URL(也稱為請求端點)來唯一標識資源。例如，/api/books/ 識別所有書籍資源，/api/books/1/ 識別ID為1的書籍。
-- **HTTP方法**: 定義資源操作的標準四種方法
-  - GET: 獲取資源
-  - POST: 創建資源
-  - PUT: 更新資源
-  - DELETE: 刪除資源
-- **狀態無關性**: 每個請求都應該包含足夠的信息來理解和處理請求，不依賴於服務器的任何存儲上下文。
-
-## 三、CRUD 操作
-CRUD 我們指的是在數據庫中執行的四個基本功能：創建（Create）、讀取（Read）、更新（Update）和刪除（Delete）。這些操作是任何數據驅動應用程序的基礎。在 RESTful API 的上下文中，CRUD 操作通常與 HTTP 動詞對應(以下圖表)：
-
-| CRUD 操作 | HTTP 請求方法 |
-|---------|-----------|
-| CREATE  | POST      |
-| READ    | GET       |
-| UPDATE  | PUT/PATCH |
-| DELETE  | DELETE    |
-
-## 四、使用 DRF 創建 API
-
-下面，我們來詳細說明上面說的每一個操作，並通過示例代碼展示如何在 DRF 中實現這些操作
-，那因為接下來的章節才會詳細說明 models、views 等，所以這邊就不先做說名。
-
-**示例**  
-假設我們有一個簡單的圖書應用程序，包含一個書籍模型（Book）。首先定義這個模型：
-
+我們可以在一個 `myapp/views.py` 中建立不止一個函數視圖。(以下我使用 JSON 回應)
 ```python
-# models.py
-from django.db import models
+from django.http import JsonResponse
 
-class Book(models.Model):
-    title = models.CharField(max_length=100)
-    author = models.CharField(max_length=100)
-    published_date = models.DateField()
+def hello(request):
+    return JsonResponse({"message": "Hello"})
+
+def world(request):
+    return JsonResponse({"message": "World"})
 ```
 
-創建一個序列化器來處理這個模型：
-```python
-# serializers.py
-from rest_framework import serializers
-from .models import Book
+## 二、URLS
+URL 配置（URLconf）可以指 Django 項目中的兩個層級，整個項目的URL配置以及每個應用（app）中的URL配置。
+每個 URL 模式都與一個視圖函數或視圖類相關聯，當用戶訪問該 URL 時，Django將調用對應的視圖來處理請求。
 
-class BookSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Book
-        fields = '__all__'
+在前面的章節就有分別提到這兩者 URL設置的不同，這邊再次提醒一次 Django 的 URL 設置是由專案的 `urls.py` 和 app 的 `urls.py` 兩個檔案組成。
+
+### path() 函數
+`path()` 函數是 Django 中定義 URL 模式的主要方法，它將特定的 URL 模式映射到相應的視圖。path 函數來自 `django.urls` 模組。
+
+語法：
+```python
+path(route, view, kwargs=None, name=None)
+```
+參數說明
+1. route:  
+類型: 字符串  
+它是用來匹配請求URL的部分簡單來說就是路徑。例如，`hello/`將匹配以 hello/ 結尾的URL。路由中可以包含動態參數，使用尖括號 < > 括起來，例如，`books/<int:id>/` 表示URL中包含一個整數參數 id。(day6時有提到)
+
+2. view:  
+類型: 可調用對象（如視圖函數或視圖類）  
+當URL模式匹配成功時，調用的視圖函數或視圖類。這個視圖負責處理請求並呈現給 client。
+
+3. name:  
+類型: 字符串（默認為 None）  
+為這個URL做一個命名，這樣可以在Django的其他地方（如模板中）使用這個名稱來引用這個URL。
+
+
+4. kwargs:  
+類型: 字典（默認為 None）  
+傳遞給視圖的附加參數。這是一個可選參數，允許將附加的關鍵字參數傳遞給視圖函數。
+
+
+## 三、完整範例
+以下是完整的項目設置，展示如何創建和連接視圖和URL。(從建立完 app 後開始)
+
+1. 在 `myapp/views.py` 中添加視圖函數：
+```python
+from django.http import JsonResponse
+
+def hello(request):
+    return JsonResponse({"message": "Hello"})
+
+def world(request):
+    return JsonResponse({"message": "World"})
 ```
 
-進行文件遷移
+2. 在專案的 `urls.py` 中引入 app 的路由 :
+```python
+# urls.py
+from django.urls import path, include
+from django.contrib import admin
+    
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('myapp/', include('myapp.urls')),
+]
+```
+
+3. 在 app 中的 `urls.py` 中設定路由 :
+```python
+# urls.py
+from django.urls import path
+from myapp import views
+
+urlpatterns = [
+    path('hello/', views.hello, name='hello'),
+    path('world/', views.world, name='world'),
+]
+```
+
+4. 啟動服務 :
 ```commandline
-python manage.py makemigrations
-python manage.py migrate
+python manage.py runserver
 ```
 
-### 1. 創建資源 (Create): 創建操作用於新增一個新的資源。這通常對應於HTTP的 POST 方法。  
-在視圖中實現創建操作
-```python
-# views.py
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-from .serializers import BookSerializer
+5. 執行結果
+- 打開瀏覽器輸入 http://127.0.0.1:8000/myapp/world/ 做查看
+- 打開瀏覽器輸入 http://127.0.0.1:8000/myapp/hello/ 做查看
 
-@api_view(['POST'])
-def create_book(request):
-    serializer = BookSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=201)
-    return Response(serializer.errors, status=400)
-```
-
-加上對應的路由設置
-```python
-# urls.py
-from django.urls import path
-from . import views
-
-urlpatterns = [
-    path('books/', views.create_book),
-]
-```
-
-使用方法  
-> 創建書籍（Create Book）：
->- 發送 POST 請求到 `/books/`，請求體包含書籍信息。
-
-### 2. Read (讀取): 讀取操作用於獲取現有資源的信息。這通常對應於HTTP的 GET 方法。  
-在視圖中實現創建操作
-```python
-
-# views.py
-from rest_framework import generics
-from .models import Book
-from .serializers import BookSerializer
-
-# 獲取所有書籍
-class BookList(generics.ListCreateAPIView):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-
-# 獲取單本書籍
-class BookDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Book.objects.all()
-    serializer_class = BookSerializer
-```
-
-加上對應的路由設置
-```python
-# urls.py
-from django.urls import path
-from .views import BookList, BookDetail
-
-urlpatterns = [
-    path('books/', BookList.as_view()),
-    path('books/<int:pk>/', BookDetail.as_view()),
-]
-```
-
-使用方法
->   讀取所有書籍（Read All Books）：  
-> - 發送 GET 請求到 `/books/`。  
-
-> 讀取單本書籍（Read Single Book）：  
-> - 發送 GET 請求到 `/books/<int:pk>/`，其中 pk 是書籍的ID。  
+### 建立的步驟
+1. 在 app 中的 `views.py` 中建立函數視圖
+2. 在 `views.py` 中引入 `HttpResponse` or `JsonResponse` 類別
+3. 在函數中返回一個 `HttpResponse` or `JsonResponse` 物件
+4. 在專案的 `urls.py` 中設定路由
+5. 在 app 的 `urls.py` 中引入剛剛建立的函數視圖
+6. 啟動服務
+7. 在瀏覽器中輸入對應的 URL 查看回傳結果
 
 
-### 3. Update (更新): 更新操作用於修改現有資源的信息。這通常對應於HTTP的 PUT 或 PATCH 方法。
-在上面的`BookDetail`視圖中，我們已經處理了更新操作。具體來說，`RetrieveUpdateDestroyAPIView`通過 PUT 或 PATCH 請求來處理資源的更新。
+## 四、總結
+視圖是 Django Web 應用程序的核心，它們接收 HTTP 請求並返回 HTTP 響應。在這篇文章中，我們學習了如何創建函數視圖和如何連接 URL。在下一篇文章中，我們將介紹如何使用模板（Templates）來渲染 HTML 頁面。
 
-使用方法
-> 更新書籍（Update Book）：
-> - 發送 PUT 或 PATCH 請求到 `/books/<int:pk>/`，請求體包含要更新的書籍信息。
-
-### 4. Delete (刪除): 刪除操作用於刪除現有資源。這通常對應於HTTP的 DELETE 方法。
-同樣，在上面的`BookDetail`視圖中，我們已經處理了刪除操作。`RetrieveUpdateDestroyAPIView`通過 DELETE 請求來處理資源的刪除。
-
-使用方法
-
-> 刪除書籍（Delete Book）：
-> - 發送 DELETE 請求到 `/books/<int:pk>/`，其中 pk 是書籍的ID。
-
-## 五、總結
-在這篇文章中，我們介紹了 DRF 和 RESTful API 的基本概念，並通過一個簡單的示例展示了 CRUD 的操作。下一篇文章中，我們將介紹視圖（Views）。
-
-## 六、參考資料
-- https://cindyliu923.medium.com/%E4%BB%80%E9%BA%BC%E6%98%AF-rest-restful-7667b3054371
-- https://aws.amazon.com/tw/what-is/restful-api/
+## 五、參考資料
+- https://ithelp.ithome.com.tw/articles/10289461
+- https://developer.mozilla.org/zh-TW/docs/Learn/Server-side/Django/Home_page

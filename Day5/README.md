@@ -87,7 +87,7 @@ def hello_world(request):
 ![img_3.png](https://github.com/David20001110/2024-iTome/blob/master/Day5/img_3.png?raw=true)
 
 ## 四、總結
-今天我們學習了如何建立一個 Django app 並註冊到專案中，並建立了一個簡單的 API 來回傳 "Hello World"。下一篇文章將會介紹 Django REST framework 以及 RESTful API 的概念。
+今天我們學習了如何建立一個 Django app 並註冊到專案中，並建立了一個簡單的 API 來回傳 "Hello World"。下一篇我們將介紹視圖 (View)
 
 ## 五、參考資料
 - https://blog.kyomind.tw/django-rest-framework-01/

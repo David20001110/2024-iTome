@@ -1,87 +1,54 @@
-# Day 10 - 模型（Models）
+# Day 11 - 資料庫遷移、基本指令
 
-- 介紹ORM
-- 建立 Models
-- 字段類型和屬性
+- 資料遷移
+   - 什麼是 makemigrations
+   - 什麼是 migrate
+- 查看遷移狀況
 
-在 Django 中，模型是與資料庫進行交互的一種方式。模型是一個類，它包含了定義資料庫表的字段和行為。Django 提供了一個 ORM（Object-Relational Mapping）工具，它允許我們使用 Python 代碼來定義模型，而不需要直接使用 SQL 語句。
+## 一、資料遷移
 
-## 一、ORM（Object-Relational Mapping）
+資料遷移是將 app 或是模型（Model）中的變更應用到資料庫的過程。這包括創建表、修改表結構、刪除表等操作。
+Django 的遷移系統自動生成和應用這些變更，讓開發者不需要手動編寫 SQL 語句，
+它實際上是一個Python的檔案，可以同步Models.py裡的類別以及資料庫，因此只要有更動 Model 就需要去執行遷移的動作，主要會去執行的動作兩個一個是 makemigrations 一個是 migrate。
 
-ORM 是一種編程技術，ORM 的目的是讓開發者使用 Python 代碼來操作資料庫，而不需要直接使用 SQL 語句。這使得我們可以更容易地與資料庫進行交互，並且可以提高代碼的可讀性和可維護性。
+### 1. 什麼是 makemigrations
+- `makemigrations` 是一個用於將模型更改的遷移文件生成到專案中的命令。
+- 當我們執行  `makemigrations` 命令對模型進行更改時，Django 會自動檢測到這些更改，並生成一個 python 的遷移文件，這個遷移文件包含了對模型的更改操作。
 
-## 二、建立 Models
+### 2. 什麼是 migrate
+- `migrate` 是一個用於將遷移文件應用到資料庫的命令。
+- 當我們執行 `migrate` 命令時，Django 會將遷移文件應用到資料庫，這樣我們的資料庫就會根據模型的更改進行更新。
+- `migrate` 命令會自動檢測專案中的遷移文件，並將這些遷移文件應用到資料庫中，使資料庫和模型保持同步。
 
-ORM 提供了一個模型類（Model class）來定義資料庫表。每個模型類對應到資料庫中的一個表，每個模型類的屬性對應到表中的一個欄位，我們可以通過定義模型類來定義資料庫表的結構。每個模型類都是 `django.db.models.Model` 的子類。
+### 實際操作
+我們延續昨天建立的 `UserProfile` model 去進行遷移的操作
 
-### 1. 創建模型
 
-```python
-from django.db import models
-
-class UserProfile
-    username = models.CharField(max_length=10)
-    is_authenticated = models.BooleanField(default=False, help_text='使用者是否有認證')
-    message = models.TextField(max_length=100, null=True, blank=True)
-    age = models.IntegerField(default=18)
-
-    def __str__(self):
-        return self.username
+```commandline
+python manage.py makemigrations
 ```
+![img_1.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/img_1.png?raw=true)
+- 執行完後就會看到 Create model UserProfile 的訊息，代表成功建立遷移檔案
 
-- 在這個例子中，我們定義了一個名為 `UserProfile` 的模型類，它包含了四個字段 `username`、`is_authenticated`、`message` 和 `age`
-- 我們還定義了 `__str__` 方法，它返回模型對象的 `username` 屬性。
-
-
-## 三、字段類型和屬性
-
-### 1. 字段類型
-
-Django 提供了多種字段類型，用於定義資料庫表中的字段。以下是一些常用的字段類型：
-
-- `CharField`：字符字段，用於存儲短文本
-- `TextField`：文本字段，用於存儲長文本
-- `IntegerField`：整數字段，用於存儲整數
-- `FloatField`：浮點字段，用於存儲浮點數
-- `BooleanField`：布爾字段，用於存儲布爾值
-- `DateTimeField`：日期時間字段，用於存儲日期和時間
-- `ForeignKey`：外鍵字段，用於定義與其他模型的關係
-- `ManyToManyField`：多對多字段，用於定義多對多關係
-- `EmailField`：郵件地址字段，用於存儲郵件地址
-- `URLField`：URL 地址字段，用於存儲 URL 地址
-- `ImageField`：圖片字段，用於存儲圖片文件
-- `FileField`：文件字段，用於存儲文件
-
-### 2. 字段屬性
-
-每個字段類型都有一些屬性，用於定義字段的特性。以下是一些常用的字段屬性：
-
-- `max_length`：指定字段的最大長度
-- `default`：指定字段的默認值
-- `null`：指定字段是否可以為空
-- `blank`：指定字段是否可以為空白
-- `choices`：指定字段的選項
-- `help_text`：指定字段的幫助文本
-- `auto_now_add`：自動添加當前時間
-- `auto_now`：自動更新當前時間
-
-```python
-class UserProfile
-    username = models.CharField(max_length=10)
-    is_authenticated = models.BooleanField(default=False, help_text='使用者是否有認證')
-    message = models.TextField(max_length=100, null=True, blank=True)
-    age = models.IntegerField(default=18)
+```commandline
+python manage.py migrate
 ```
+![img_2.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/img_2.png?raw=true)
+- 執行完後就會看到 Applying myapp.0001_initial... OK 的訊息，代表成功將遷移檔案應用到資料庫中 _(因為這裡我是先建立又刪除再建立所以會顯示0003)_
 
-- 在 UserProfile 定義了四個字段 `username`、`is_authenticated`、`message` 和 `age`
-- `username` : 是一個 `CharField` 類型，最大長度為 10
-- `is_authenticated` : 是一個 `BooleanField` 類型，默認值為 `False`，並且有一個幫助文本 `使用者是否有認證`
-- `message` : 是一個 `TextField` 類型，最大長度為 100，可以為空值
-- `age` : 是一個 `IntegerField` 類型，默認值為 18
 
-## 四、總結
+## 二、查看遷移狀況
+我們可以使用以下指令來查看遷移的狀況，查看哪些遷移已經被應用
+```commandline
+python manage.py showmigrations
+```
+![img_3.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/img_3.png?raw=true)
 
-模型是 Django 中與資料庫進行交互的一種方式，它定義了資料庫表的結構，包括表名、字段、屬性等。Django 的 ORM 提供了一個模型類來定義資料庫表，並且可以通過對模型類的操作來對資料庫進行增刪改查的操作。在定義模型時，我們可以使用多種字段類型和屬性來定義字段的特性，以滿足不同的需求。在下一篇文章中，我們將介紹資料庫介紹、遷移和基本指令。
+> 這邊補充一下我是使用 pycharm 專業版內建的 Database 工具來查看資料庫的資料，可以直接在IDE中查看資料庫的資料，非常方便。
+> 也可以使用一些第三方的工具來查看資料庫的資料，例如：`DBeaver`、`Navicat`、`HeidiSQL`等等。
 
-## 五、參考資料
-- https://ithelp.ithome.com.tw/articles/10295259
+## 三、總結
+今天我們學習了什麼是資料遷移以及如何進行資料遷移。下一篇文章我們將會學習如何進行資料的增刪改查。
+
+## 四、參考資料
+- https://ithelp.ithome.com.tw/articles/10298464
