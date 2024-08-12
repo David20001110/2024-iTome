@@ -1,4 +1,4 @@
-# Day 8 - 模板（Templates）
+# Day 7 - 模板（Templates）
 - 什麼是 Template
 - 建立template
 - 連接views

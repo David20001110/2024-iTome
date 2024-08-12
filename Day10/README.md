@@ -1,4 +1,4 @@
-# Day 11 - 資料庫遷移、基本指令
+# Day 10 - 資料庫遷移、基本指令
 
 - 資料遷移
    - 什麼是 makemigrations
@@ -27,13 +27,13 @@ Django 的遷移系統自動生成和應用這些變更，讓開發者不需要�
 ```commandline
 python manage.py makemigrations
 ```
-![img_1.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/img_1.png?raw=true)
+![img_1.png](https://github.com/David20001110/2024-iTome/blob/master/Day10/img_1.png?raw=true)
 - 執行完後就會看到 Create model UserProfile 的訊息，代表成功建立遷移檔案
 
 ```commandline
 python manage.py migrate
 ```
-![img_2.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/img_2.png?raw=true)
+![img_2.png](https://github.com/David20001110/2024-iTome/blob/master/Day10/img_2.png?raw=true)
 - 執行完後就會看到 Applying myapp.0001_initial... OK 的訊息，代表成功將遷移檔案應用到資料庫中 _(因為這裡我是先建立又刪除再建立所以會顯示0003)_
 
 
@@ -42,7 +42,7 @@ python manage.py migrate
 ```commandline
 python manage.py showmigrations
 ```
-![img_3.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/img_3.png?raw=true)
+![img_3.png](https://github.com/David20001110/2024-iTome/blob/master/Day10/img_3.png?raw=true)
 
 > 這邊補充一下我是使用 pycharm 專業版內建的 Database 工具來查看資料庫的資料，可以直接在IDE中查看資料庫的資料，非常方便。
 > 也可以使用一些第三方的工具來查看資料庫的資料，例如：`DBeaver`、`Navicat`、`HeidiSQL`等等。

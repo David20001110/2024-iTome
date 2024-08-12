@@ -1,4 +1,4 @@
-# Day 6 - 介紹 DRF 以及 RESTful
+# Day 13 - 介紹 DRF 以及 RESTful
 - 介紹DRF
 - 介紹RESTful
 - 使用Django REST framework創建API

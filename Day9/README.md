@@ -1,4 +1,4 @@
-# Day 10 - 模型（Models）
+# Day 9 - 模型（Models）
 
 - 介紹ORM
 - 建立 Models

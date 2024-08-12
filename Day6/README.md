@@ -1,4 +1,4 @@
-# Day 7 - 視圖（Views）和 URLS
+# Day 6 - 視圖（Views）和 URLS
 
 - 視圖和 URLS
 - function based views
