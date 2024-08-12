@@ -52,15 +52,15 @@ Django 是一個 python 的 Web 框架它提供了豐富的工具和內置功能
 2. 建立虛擬環境  
    可以透過`ctrl+shift+p` 打開Settings  
 
-   ![img.png](https://github.com/David20001110/2024-iTome/blob/master/Day2/setting.png?raw=true)
+   ![img.png](https://github.com/David20001110/2024-iTome/blob/master/Day02/setting.png?raw=true)
    - 選擇`Add Local Interpreter`  
    <br>
    
-   ![img.png](https://github.com/David20001110/2024-iTome/blob/master/Day2/environment.png?raw=true)
+   ![img.png](https://github.com/David20001110/2024-iTome/blob/master/Day02/environment.png?raw=true)
    - 選擇`Poetry Envvironment`，`Base interpreter`選擇你下載的Python版本就可以建立了  
    <br>  
    
-   ![img.png](https://github.com/David20001110/2024-iTome/blob/master/Day2/img.png?raw=true)
+   ![img.png](https://github.com/David20001110/2024-iTome/blob/master/Day02/img.png?raw=true)
    - 可以確認右下角是否有顯示Poetry的圖示，代表成功建立虛擬環境  
    <br>
 

@@ -30,7 +30,7 @@ user.save()
 ```  
 
 當出現以下的資料那就代表成功建立資料表以及一筆資料
-![create.png](create.png)
+![create.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/create.png?raw=true)
 
 除了單獨創建之外還有批量創建的方法
 
@@ -42,7 +42,7 @@ UserProfile.objects.bulk_create([
     UserProfile(username='Jerry', is_authenticated=True, message='This is Jerry profile.')
 ])
 ```
-![bulk_create.png](bulk_create.png)
+![bulk_create.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/bulk_create.png?raw=true)
 
 ## 三、修改和刪除
 
@@ -57,7 +57,7 @@ user.message = 'This is updated message.'
 user.save()
 ```
 - 這裡我們先找到 `username` 為 `David` 的資料，然後修改 `message` 的內容，最後保存。
-![update.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/img_1.png?raw=true)
+![update.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/update.png?raw=true)
 
 ### 2. 刪除資料
 
@@ -67,7 +67,7 @@ user = UserProfile.objects.get(username='David')
 user.delete()
 ```
 - 這裡我們先找到 `username` 為 `David` 的資料，然後刪除。
-![img_1.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/img_1.png?raw=true)
+![img_1.png](https://github.com/David20001110/2024-iTome/blob/master/Day11/delete.png?raw=true)
 
 ## 四、總結
 今天我們學習了如何使用 shell command 來操作資料庫，以及如何創建、保存、修改和刪除資料表中的資料。下一篇文章我們將會學習如何進行資料的查詢。
