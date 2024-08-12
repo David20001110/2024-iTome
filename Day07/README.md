@@ -69,8 +69,8 @@
     ```commandline
     python manage.py runserver
     ```
-    - 這樣就成功連結我們建立的 template
-    ![img.png](img.png)
+    - 這樣就成功連結我們建立的 template   
+    ![img.png](https://github.com/David20001110/2024-iTome/blob/master/Day07/img.png?raw=true)
 
 ### 建立的步驟
 1. 在 app 中的 `views.py` 中建立函數視圖
@@ -189,7 +189,7 @@
 ```
 
 執行結果  
-![img_1.png](img_1.png)
+![img_1.png](https://github.com/David20001110/2024-iTome/blob/master/Day07/img_1.png?raw=true)
 - 註解的內容不會顯示出來
 - 標籤的地方因為 David 的 `is_authenticated` 欄位是 True，所以會顯示歡迎
 - message 的部分全部變成大寫
