@@ -129,6 +129,33 @@ class UserProfileSerializer(serializers.ModelSerializer):
 - 在 create 方法中，先從 validated_data 中取出 order_id_list，遍歷 order_id_list 並將與這些 id 相關聯的 Order 實例添加到 user_profile.orders 中
 - 在 update 方法中，先從 validated_data 中取出 order_id_list，然後清空 instance.orders，然後遍歷 order_id_list，並將與這些 id 相關聯的 Order 實例添加到 instance.orders 中，最後遍歷 validated_data，並將數修改後的資料保存到 instance 中
 
+#### 實際使用這個序列化器進行實際驗證的完整示例
+```python
+from my_app.serializers import UserProfileSerializer, OrderSerializer
+
+# 先建立兩個 Order 實例
+order1 = Order.objects.create(order_number='0001', order_date='2022-01-01')
+order2 = Order.objects.create(order_number='0002', order_date='2022-01-02')
+
+# 建立一個新用戶的數據
+user_data = {
+    'username': 'Curry',
+    'age': 18,
+    'message': 'This is Curry profile.',
+    'order_id_list': [order1.id, order2.id]
+}
+
+# 初始化序列化器，並傳入數據
+serializer = UserProfileSerializer(data=user_data)
+
+# 檢查數據是否有效
+if serializer.is_valid():
+    # 如果有效，保存數據
+    user_profile = serializer.save()
+    print("User profile created:", user_profile)
+else:
+    print("Validation errors:", serializer.errors)
+```
 這樣我們就可以根據用戶提交的數據來創建或更新 UserProfile 實例，並處理與 UserProfile 關聯的 Order 實例
 
 ## 四、總結
