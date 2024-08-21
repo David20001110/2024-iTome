@@ -54,114 +54,85 @@ else:
 
 ## 二、嵌套的序列化
 
-如果 models 之間有關聯像是外建字段或是多對多的關聯，我們可以使用嵌套序列化來處理這些關聯數據來處理關聯數據。例如，如果一個模型有一個外鍵字段，我們可以使用另一個序列化器來序列化這個外鍵字段的數據。
+如果 models 之間有關聯像是外建字段或是多對多的關聯，我們可以使用嵌套序列化來處理這些關聯數據來處理關聯數據。
 
 ```python
-from django.db import models
-
-class Department(models.Model):
-    name = models.CharField(max_length=100)
-    description = models.TextField()
-
-    def __str__(self):
-        return self.name
-
-class UserProfile
-    username = models.CharField(max_length=10)
-    is_authenticated = models.BooleanField(default=False, help_text='使用者是否有認證')
-    message = models.TextField(max_length=100, null=True, blank=True)
-    age = models.IntegerField(default=18)
-    departments = models.ManyToMany(Department, on_delete=models.CASCADE, related_name='users')
+class Order(models.Model):
+    order_number = models.CharField(max_length=20)
+    order_date = models.DateField(auto_now=True)
+    user_profile = models.ForeignKey(UserProfile, related_name='orders', on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.username
+        return self.order_number
 ```
-- 建立一個 Department 的模型  (記得要 migrate)
-- 在 UserProfile 模型中新增一個多對多字段 `departments` 來關聯 Department 模型
+- 建立 Order 的模型，它有一個外鍵字段 user_profile 關聯到 UserProfile 模型
+- 使用 `related_name='orders'` 來設定反向關聯的名稱，這樣我們就可以使用 orders 來訪問與 UserProfile 關聯的所有 Order 實例
+- 原則這樣 UserProfile 對上 Order 是屬於一對多的關係
 
 ```python
-from rest_framework import serializers
-from my_app.models import UserProfile, Department
-
-class DepartmentSerializer(serializers.ModelSerializer):
+class OrderSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Department
-        fields = '__all__'
-        
+        model = Order
+        fields = ['order_number', 'order_date']
+
+
 class UserProfileSerializer(serializers.ModelSerializer):
-    departments = DepartmentSerializer(many=True)
+    orders = OrderSerializer(many=True, read_only=True)
+    order_id_list = serializers.ListField(write_only=True, child=serializers.IntegerField(), required=False)
 
     class Meta:
         model = UserProfile
-        fields = ['username', 'is_authenticated', 'age', 'message','departments']
+        fields = ['username', 'is_authenticated', 'age', 'message', 'orders']
 ```
-- 建立一個 Department 的序列化器
-- 在 UserProfileSerializer 中新增 departments 的序列化器，因為可能會有多個要加上參數 `many=True`
-- 這樣就可以將 Department 的數據序列化到 UserProfile 的數據中
+- 在 UserProfileSerializer 中，我們添加了一個 orders 字段，它是一個 OrderSerializer 的實例，並設置了 many=True，這樣我們就可以序列化與 UserProfile 關聯的所有 Order 實例
+- 多添加了一個 order_id_list 字段，它是一個整數列表，用於接收用戶提交的 Order 的 id 列表，這樣我們就可以通過 id 列表來創建與 UserProfile 關聯的 Order 實例
 
+#### 關於參數的解釋
+- 使用 read_only=True 來設置 orders 字段為只讀
+- 使用 write_only=True 來設置 order_id_list 字段為只寫
+- 使用 child=serializers.IntegerField() 來設置 order_id_list 字段的子字段為整數類型
 
-#### 使用範例
-
-```python
-department = Department.objects.create(name="IT", description="Information Technology")
-user_profile = UserProfile.objects.create(username="Alice", message="This is Alice profile.", age=30, departments=department)
-
-serializer = UserProfileSerializer(user_profile)
-print(serializer.data)
-
-# {
-#     "username": "Alice",
-#     "message": "This is Alice profile.",
-#     "is_authenticated": False,
-#     "age": 30,
-#     "departments":[
-#            {
-#                "name": "IT",
-#                "description": "Information Technology"
-#            }
-#     ]
-# }
-```
-- 這樣就可以將 Department 的數據序列化到 UserProfile 的數據中
 
 ## 三、create 和 update 方法的實作
 我們能夠根據經過驗證的資料傳回完整的物件實例這件事在 serializer 裡面進行，我們可以去實作.create()和.update()方法或是只實作其中一個方法，因應自己的需求而定。
 
-延續著上面的範例，實作兩個方法
+延續著上面的 UserProfileSerializer 範例來實作兩個方法 
 ```python
-from my_app.models import Department
-
 class UserProfileSerializer(serializers.ModelSerializer):
-    departments = DepartmentSerializer(many=True)
+    orders = OrderSerializer(many=True, read_only=True)
+    order_id_list = serializers.ListField(write_only=True, child=serializers.IntegerField(), required=False)
 
     class Meta:
         model = UserProfile
-        fields = ['username', 'is_authenticated', 'age', 'message', 'departments']
+        fields = ['username', 'is_authenticated', 'age', 'message', 'orders']
 
     def create(self, validated_data):
-        departments_data = validated_data.pop('departments', [])
+        order_id_list = validated_data.pop('order_id_list', None)
         user_profile = UserProfile.objects.create(**validated_data)
-        departments = Department.objects.filter(id__in=departments_data).all()
-        user_profile.department.set(departments) 
+        if order_id_list is not None:
+            for order_id in order_id_list:
+                user_profile.orders.add(Order.objects.get(id=order_id))
         return user_profile
 
     def update(self, instance, validated_data):
-        departments_data = validated_data.pop('departments', [])
+        order_id_list = validated_data.pop('order_id_list', None)
+        if order_id_list is not None:
+            instance.orders.clear()
+            for order_id in order_id_list:
+                instance.orders.add(Order.objects.get(id=order_id))
 
-        instance.username = validated_data.get('username', instance.username)
-        instance.email = validated_data.get('email', instance.email)
-        instance.age = validated_data.get('age', instance.age)
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
         instance.save()
-
-        instance.department.clear()  # 先清除所有關聯
-        for department_data in departments_data:
-            department, created = Department.objects.get_or_create(**department_data)
-            instance.department.add(department)
-
         return instance
 ```
+- 在 create 方法中，先從 validated_data 中取出 order_id_list，遍歷 order_id_list 並將與這些 id 相關聯的 Order 實例添加到 user_profile.orders 中
+- 在 update 方法中，先從 validated_data 中取出 order_id_list，然後清空 instance.orders，然後遍歷 order_id_list，並將與這些 id 相關聯的 Order 實例添加到 instance.orders 中，最後遍歷 validated_data，並將數修改後的資料保存到 instance 中
+
+這樣我們就可以根據用戶提交的數據來創建或更新 UserProfile 實例，並處理與 UserProfile 關聯的 Order 實例
 
 ## 四、總結
+今天我們學習了如何在序列化器中添加自定義的字段驗證方法，以及如何使用嵌套序列化來處理模型之間的關聯數據。下一篇文章我們將會學習如何使用信號（Signals）。
 
 ## 五、參考資料
 - https://blog.csdn.net/weixin_43956958/article/details/117920417
