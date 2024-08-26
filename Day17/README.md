@@ -18,7 +18,7 @@ Django 提供了一個內置的管理站台（Admin Site），用於管理網站
 python manage.py createsuperuser
 ```
 
-![superuser.png](superuser.png)
+![superuser.png](https://github.com/David20001110/2024-iTome/blob/master/Day17/superuser.png?raw=true)
 
 然後按照上面提示輸入用戶名、電子郵件和密碼，即可創建一個超級用戶。
 
@@ -64,13 +64,13 @@ admin.site.register(Order, OrderAdmin)
 
 啟動開發服務器後，可以在瀏覽器中訪問 `/admin` 路徑，然後使用剛剛創建的超級用戶登錄管理站台。
 
-![login.png](login.png)
+![login.png](https://github.com/David20001110/2024-iTome/blob/master/Day17/login.png?raw=true)
 
 在管理站台中，可以看到所有已註冊的模型，並可以對模型的數據進行增刪改查等操作，其中可以有原本內建預設的 Group 和 Users，以及我們去建立的 Orders 和 User profiles。
 
-![admin.png](admin.png)
+![admin.png](https://github.com/David20001110/2024-iTome/blob/master/Day17/admin.png?raw=true)
 
-![David.png](David.png)
+![David.png](https://github.com/David20001110/2024-iTome/blob/master/Day17/David.png?raw=true)
 
 > 如果希望介面是中文的話，可以在 `settings.py` 中設置 `LANGUAGE_CODE = 'zh-hans'`，這樣管理站台的介面就會是中文的了。
 
@@ -100,7 +100,7 @@ class UserProfileAdmin(admin.ModelAdmin):
 - 定義了一個 `OrderInline` 類，並設置了 `fields`、`list_display` 和 `model` 等屬性，然後將其添加到 `UserProfileAdmin` 的 `inlines` 屬性中。
 這個 `OrderInline` 類是一個內聯類，用於在 `UserProfile` 的管理介面中顯示 `Order` 的相關信息。
 
-![inline.png](inline.png)
+![inline.png](https://github.com/David20001110/2024-iTome/blob/master/Day17/inline.png?raw=true)
 - 這樣我們就能直接在 UserProfile 的管理介面中看到與其關聯的 Order 有哪些了。
 
 ## 二、總結
