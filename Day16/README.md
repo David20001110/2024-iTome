@@ -55,5 +55,10 @@ default_app_config = 'my_app.apps.MyAppConfig'
 ```
 - 這裡的 `default_app_config` 用於指定 app 的配置類。
 
-### 4. 測試信號
+### 4. 預定義信號
+Django 提供了許多預定義的信號，在前面我們所使用的是模型實例保存時去調用我們建立的信號，也有其他的預定義信號。
+- pre_save: 在模型保存之前發送。
+- post_save: 在模型保存之後發送。
+- pre_delete: 在模型刪除之前發送。
+- post_delete: 在模型刪除之後發送。
 
