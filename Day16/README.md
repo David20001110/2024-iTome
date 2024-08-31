@@ -1,6 +1,7 @@
 # Day 16 - 信號（Signals）
 - signals 的運作
 - signals 的使用
+- 自定義信號器
 
 ## 一、signals 的運作
 
@@ -16,7 +17,7 @@
 
 ## 二、 signals 的使用
 
-### 1. 定義信號接收器
+### 1. 接收和處理信號
 
 ```python
 from django.db.models.signals import post_save
@@ -31,7 +32,14 @@ def user_created(sender, instance, created, **kwargs):
 ```
 - 這裡的信號接收器，會在 `UserProfile` 模型的實例被創建時被調用。
 
-### 2. 連接信號接收器
+### 2. 內建的信號
+Django 提供了許多預定義的信號，在前面我們所使用的是模型實例保存時去調用我們建立的信號，也有其他的預定義信號。
+- pre_save: 在模型保存之前發送。
+- post_save: 在模型保存之後發送。
+- pre_delete: 在模型刪除之前發送。
+- post_delete: 在模型刪除之後發送。
+
+### 3. 連接信號接收器的其他方法
 
 在 `my_app/apps.py` 中連接信號接收器：
 
@@ -45,20 +53,80 @@ class MyAppConfig(AppConfig):
     def ready(self):
         import my_app.signals
 ```
-- 這裡的 `ready` 方法會在 Django 啟動時被調用，這裡我們將信號接收器連接到 app。
-### 3. 啟用信號
-
-在 `my_app/__init__.py` 中啟用信號：
+- 這裡的 `ready` 方法會在應用的所有配置和初始化完成後被調用，這裡我們將信號接收器連接到 app。
 
 ```python
 default_app_config = 'my_app.apps.MyAppConfig'
 ```
 - 這裡的 `default_app_config` 用於指定 app 的配置類。
 
-### 4. 預定義信號
-Django 提供了許多預定義的信號，在前面我們所使用的是模型實例保存時去調用我們建立的信號，也有其他的預定義信號。
-- pre_save: 在模型保存之前發送。
-- post_save: 在模型保存之後發送。
-- pre_delete: 在模型刪除之前發送。
-- post_delete: 在模型刪除之後發送。
+## 三、自定義信號
 
+### 1. 定義自定義信號
+```python
+# my_app/signals.py 
+
+from django.dispatch import Signal
+
+my_custom_signal = Signal(providing_args=["user_profile", "request"])
+```
+- 定義一個名為 my_custom_signal 的信號，並且可以傳遞 'user_profile' 和 'request' 參數
+- Django 提供了 django.dispatch.Signal 類來創建信號。
+
+### 2. 寫一個信號器
+
+```python
+# my_app/handlers.py
+
+def my_custom_signal_handler(sender, **kwargs):
+    user_profile = kwargs.get('user_profile')
+    request = kwargs.get('request')
+    # 在這裡執行你想要的邏輯
+    print(f"我的自定義信號被用戶: {user_profile} 和請求: {request} 觸發了")
+```
+- 會建立一個 `handlers.py` 去編寫信號器
+
+### 3. 連接信號處理器
+```python
+# my_app/apps.py
+from django.apps import AppConfig
+
+class MyAppConfig(AppConfig):
+    name = 'my_app'
+
+    def ready(self):
+        from .signals import my_custom_signal
+        from .handlers import my_custom_signal_handler
+        
+        # 連接信號和信號處理器
+        my_custom_signal.connect(my_custom_signal_handler)
+```
+
+### 4. 觸發信號
+
+通常會是在 `views.py` 當中去觸發
+```python
+# myapp/views.py
+
+from django.shortcuts import render
+from .signals import my_custom_signal
+
+def my_view(request):
+    # 其他操作
+    
+    # 觸發信號，並傳遞 user 和 request 作為參數
+    my_custom_signal.send(sender=None, user_profile=request.user_profile, request=request)
+    
+    return render(request, 'my_template.html')
+```
+- 當曜觸發信號時使用 send() 方法。
+- 這時在 terminal 應該就會看到輸出"我的自定義信號被用戶: [user_profile] 和請求: [request] 觸發了"
+
+## 四、總結
+
+這篇文章我們介紹了信號在 django 中的作用包含解耦的定義、使用情境等以及它的運作方式，用實際的例子去操作一次。
+下一篇我們將會介紹管理站台 (Admin site)
+
+## 五、參考資料
+
+- https://juejin.cn/post/7300789760703561754
