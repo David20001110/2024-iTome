@@ -65,15 +65,15 @@ class CustomUser(models.Model):
         return self.username
 ```
 
-接著，我們創建 ModelForm 表單
+接著，我們要要在 `app` 底下創建 `forms.py` 來建立ModelForm 表單
 
 ```python
 from django import forms
-from .models import User
+from .models import CustomerUser
 
 class UserRegistrationForm(forms.ModelForm):
     class Meta:
-        model = User
+        model = CustomUser
         fields = ['username', 'email', 'password']
         widgets = {
             'password': forms.PasswordInput(),
@@ -208,8 +208,22 @@ urlpatterns = [
     <p>Your account has been created successfully.</p>
 </body>
 </html>
-
 ```
 
-## 參考資料
+成果展示：(程式寫完記得要做 migrate)
+
+進到註冊的畫面輸入資訊進行註冊:  
+![register.png](register.png)
+
+成功註冊後會進到歡迎畫面:  
+![welcome.png](welcome.png)
+
+資料庫中也會新增一筆註冊的資料:  
+![database.png](database.png)
+
+## 六、總結
+
+今天我們學習了如何使用 Django 的表單系統來創建和管理表單，以及如何使用 ModelForm 類來建立與模型對應的表單字段，以及展示實作成果。下一篇文章我們將會介紹 Class-based Views
+
+## 七、參考資料
 - https://developer.mozilla.org/zh-TW/docs/Learn/Server-side/Django/Forms
