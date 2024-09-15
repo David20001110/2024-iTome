@@ -213,13 +213,13 @@ urlpatterns = [
 成果展示：(程式寫完記得要做 migrate)
 
 進到註冊的畫面輸入資訊進行註冊:  
-![register.png](register.png)
+![register.png](https://github.com/David20001110/2024-iTome/blob/master/Day18/register.png?raw=true)
 
 成功註冊後會進到歡迎畫面:  
-![welcome.png](welcome.png)
+![welcome.png](https://github.com/David20001110/2024-iTome/blob/master/Day18/welcome.png?raw=true)
 
 資料庫中也會新增一筆註冊的資料:  
-![database.png](database.png)
+![database.png](https://github.com/David20001110/2024-iTome/blob/master/Day18/database.png?raw=true)
 
 ## 六、總結
 
