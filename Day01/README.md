@@ -30,10 +30,10 @@
 | 16. | 信號（Signals）(把它擺在DRF後面)           | - signals的運作 <br> - 自定義信號器 <br>- 自定義信號器                                            |
 | 17. | 管理站台 (Admins)                    | - 設置和使用Django管理後台 (創建superuser、註冊模型到管理站台、使用管理站台)                                   |
 | 18. | 表單和模型表單（Forms and ModelForms）    | - Forms 的作用 <br>- 創建和使用 Forms <br>- 介紹*forms.ModelForm*類 <br>- 表單驗證                |
-| 19. | Views 進階 - Class Based Views (CBVs) | - 為何要使用 CBVs <br>- 常用的Class-Based Views                                            |
+| 19. | Views 進階 - Class Based Views (CBVs) | - 為何要使用 CBVs <br>- 常用的Class-Based Views <br> - 創建一個 CBV                                    |
 | 20. | Session framework                | - Sessiong是什麼、如何運作 <br>- 在Django中使用Session                                         |
 | 21. | Middleware                       | - Middleware是什麼、如何運作 <br>- 如何編寫自定義 Middleware <br>- Middleware 的應用示例               |
-| 22. | 理解 Django 認證：標準方法與 JWT 應用             | - 認證概述 <br>- JWT 認證介紹 <br>- 在 Django 中實施 JWT <br> - 安全實踐和策略                               |
+| 22. | 理解 Django 認證：標準方法與 JWT 應用             | - 認證概述 <br>- JWT 認證介紹 <br>- 在 Django 中實施 JWT <br> - 安全實踐和策略                        |
 | 23. | 用戶授權（Authorization）              | - 使用 Django 權限系統 <br>- 設置 User 和 Group 的權限                                         |
 | 24. | 客製化權限控制 (Permission)             | - 自定義權限系統                                                                          |
 | 25. | 生成API文檔（Swagger）                 | - 安裝和配置drf-yasg <br>- 設置URL路由 <br>- 生成Swagger文檔                                    |
