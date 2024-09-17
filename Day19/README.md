@@ -277,13 +277,13 @@ urlpatterns = [
 
 **看看效果如何**
 
-![img.png](img.png)
+![img.png](https://github.com/David20001110/2024-iTome/blob/master/Day19/img.png?raw=true)
 這是沒有任何訊息時的樣子，下方`get()`方法會顯示一個提交訊息的表單，但現在沒有任何訊息
 
 
 
-![img_1.png](img_1.png)
-![img_2.png](img_2.png)
+![img_1.png](https://github.com/David20001110/2024-iTome/blob/master/Day19/img_1.png?raw=true)
+![img_2.png](https://github.com/David20001110/2024-iTome/blob/master/Day19/img_2.png?raw=true)
 這裡我們打上訊息以及我們的名字，按下`Submit`的當下`post()`方法會處理表單數據，並將新訊息保存到數據庫中。成功後，使用 HttpResponseRedirect 進行重定向，以避免重複提交表單。
 
 ## 四、總結
