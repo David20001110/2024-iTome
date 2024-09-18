@@ -29,4 +29,3 @@ MTV 架構是 Django 框架的核心，它將數據庫操作、業務邏輯和�
 ## 五、參考資料
 - https://andyludeveloper.medium.com/%E7%8E%A9-django-party-3-mtv-%E6%9E%B6%E6%A7%8B-60e1188434c4
 - https://zoejoyuliao.medium.com/%E6%AF%94%E8%BC%83-mvc-%E8%88%87-django-%E7%9A%84-mtv-6c93ea9484fc
-- 
