@@ -15,7 +15,7 @@ Django app 是一個獨立的模塊或組件，每個 app 可以獨立開發和�
     ```
     - `dataset` 是 app 的名稱，可以自行更改
     - 執行完後會看到 app 的結構如下:  
-    ![img.png](https://github.com/David20001110/2024-iTome/blob/master/Day05/img.png?raw=true)
+    ![img.png](https://github.com/David20001110/2024-iTome/blob/master/Day05/img_1.png?raw=true)
         - models.py: 定義模型
         - views.py: 定義視圖
         - admin.py: 註冊模型到管理站台
